@@ -1,9 +1,9 @@
 import './App.css'
 import confetti from 'canvas-confetti'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Square } from './componentes/Square'
 import { WinnerModal } from './componentes/WinnerModal'
-import { TURNS, WINNER_COMBOS } from './constants'
+import { TURNS } from './constants'
 import { checkEndGame, checkWinnerFrom } from './logic/board'
 import { resetGameStorage, saveGameToStorage } from './logic/storage'
 
