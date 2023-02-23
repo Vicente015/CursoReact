@@ -1,6 +1,6 @@
 import './App.css'
-import confetti from 'canvas-confetti'
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
 import { Square } from './componentes/Square'
 import { WinnerModal } from './componentes/WinnerModal'
 import { TURNS } from './constants'
