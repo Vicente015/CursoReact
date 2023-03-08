@@ -1,5 +1,5 @@
 {
-  "name": "prueba-tecnica-test1",
+  "name": "04-prueba-tecnica",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,14 +10,13 @@
     "lint": "eslint src/*.jsx",
     "test": "playwright test"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.31.2",
-    "standard": "^17.0.0",
-    "vite": "^4.1.0"
-  },
   "dependencies": {
     "@vitejs/plugin-react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.31.2",
+    "vite": "^4.1.0"
   }
 }

@@ -21,7 +21,7 @@ export function App () {
           alt={`Image extracted using the first three words for ${fact}`}
         />}
 
-      <button onClick={() => handleClick()}>Get new fact</button>
+      <button onClick={handleClick}>Get new fact</button>
     </main>
   )
 }
