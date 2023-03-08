@@ -13,7 +13,6 @@ export function App () {
   return (
     <main>
       <h1>Gatetes :3</h1>
-      <button onClick={() => handleClick()}>Get new fact</button>
 
       {fact && <p>{fact}</p>}
       {imageUrl &&
@@ -21,6 +20,8 @@ export function App () {
           src={`${imageUrl}`}
           alt={`Image extracted using the first three words for ${fact}`}
         />}
+
+      <button onClick={() => handleClick()}>Get new fact</button>
     </main>
   )
 }
