@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+const IMAGE_URL_PREFIX = 'https://cataas.com'
+
 export function useCatImage ({ fact }) {
   const [imageUrl, setImageUrl] = useState()
 
@@ -17,5 +19,5 @@ export function useCatImage ({ fact }) {
       })
   }, [fact])
 
-  return { imageUrl }
+  return { imageUrl: `${IMAGE_URL_PREFIX}${imageUrl}` }
 }
