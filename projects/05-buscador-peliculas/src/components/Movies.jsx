@@ -1,10 +1,10 @@
 
 export function ListOfMovies ({ movies }) {
   return (
-    <ul>
+    <ul className='movies'>
       {
         movies.map(movie => (
-          <li key={movie.id}>
+          <li className='movie' key={movie.id}>
             <h3>{movie.title}</h3>
             <p>{movie.year}</p>
             <img src={movie.posterImg} alt={movie.title} />
@@ -15,7 +15,7 @@ export function ListOfMovies ({ movies }) {
   )
 }
 
-export function NoMoviesResulsts () {
+export function NoMoviesResults () {
   return (
     <p>No se han encontrado películas para esta búsqueda.</p>
   )
@@ -27,6 +27,6 @@ export function Movies ({ movies }) {
   return (
     hasMovies
       ? <ListOfMovies movies={movies} />
-      : <NoMoviesResulsts />
+      : <NoMoviesResults />
   )
 }
