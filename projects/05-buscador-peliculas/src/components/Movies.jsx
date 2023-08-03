@@ -22,7 +22,7 @@ export function NoMoviesResults () {
 }
 
 export function Movies ({ movies }) {
-  const hasMovies = movies.length >= 0
+  const hasMovies = !!movies && movies.length >= 0
 
   return (
     hasMovies

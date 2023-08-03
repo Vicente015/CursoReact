@@ -1,14 +1,30 @@
-import responseMovies from '../mocks/avengers.json'
+import { useMemo, useRef, useState } from 'react'
+import { searchByInput } from '../logic/search'
 
-export function useMovies () {
-  const movies = responseMovies.Search
+export function useMovies ({ query }) {
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(null)
+  // ? error no se usa (aún)
+  const [error, setError] = useState(null)
+  const previousQuery = useRef(query)
 
-  const mappedMovies = movies?.map((movie) => ({
-    id: movie.imdbID,
-    posterImg: movie.Poster,
-    title: movie.Title,
-    year: movie.Year
-  }))
+  const getMovies = useMemo(() => {
+    return async ({ query }) => {
+      if (query === previousQuery.current) return
 
-  return { movies: mappedMovies }
+      try {
+        setLoading(true)
+        setError(null)
+        previousQuery.current = query
+        const newMovies = await searchByInput({ query })
+        setMovies(newMovies)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }, [])
+
+  return { error, getMovies, loading, movies }
 }

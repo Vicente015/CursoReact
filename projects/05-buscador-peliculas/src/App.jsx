@@ -1,10 +1,11 @@
 import './App.css'
-import { useEffect, useRef, useState } from 'react'
+import debounce from 'just-debounce-it'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
 
 function useQuery () {
-  const [query, setQuery] = useState('')
+  const [query, updateQuery] = useState('')
   const [error, setError] = useState(null)
   const isFirstInput = useRef(true)
 
@@ -33,22 +34,28 @@ function useQuery () {
     setError(null)
   }, [query])
 
-  return { error, query, setQuery }
+  return { error, query, updateQuery }
 }
 
 function App () {
   // const { handleChange, results } = useSearchMovie()
-  const { movies } = useMovies()
-  const { error, query, setQuery } = useQuery()
+  const { error, query, updateQuery } = useQuery()
+  const { getMovies, loading, movies } = useMovies({ query })
+
+  const debouncedGetMovies = useCallback(
+    debounce(query => getMovies({ query }), 500)
+    , [getMovies])
 
   const handleSubmit = (event) => {
     // ? Prevenimos que el navegador reinicie cuando se envíe
     event.preventDefault()
-    console.debug({ query })
+    getMovies({ query })
   }
 
   const handleChange = (event) => {
-    setQuery(event.target.value)
+    const newQuery = event.target.value
+    updateQuery(newQuery)
+    debouncedGetMovies(query)
   }
 
   return (
@@ -73,7 +80,9 @@ function App () {
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </header>
       <main>
-        <Movies movies={movies} />
+        {
+          loading ? <p>Cargando...</p> : <Movies movies={movies} />
+        }
       </main>
     </div>
   )

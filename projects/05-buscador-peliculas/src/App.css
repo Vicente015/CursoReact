@@ -26,6 +26,7 @@ main {
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-top: 2em;
 
   display: grid;
   width: 100%;
@@ -35,8 +36,21 @@ main {
 
 .movie {
   text-align: center;
+  padding: 1em;
+  background-color: #424242;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 20px;
+  transition: all ease-in 1s;
+}
+
+.movie:hover {
+  outline: 1px solid lightyellow;
 }
 
 .movie h3, .movie p {
   margin: 0;
+}
+
+.movie img {
+  border-radius: 10px;
 }
