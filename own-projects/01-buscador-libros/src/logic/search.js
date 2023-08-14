@@ -2,7 +2,7 @@
 const API_URL = 'https://gutendex.com/books'
 
 const mapBooks = (books) => books.map((book) => ({
-  author: book.authors[0].name,
+  author: book.authors[0]?.name ?? '',
   coverImage: book.formats['image/jpeg'],
   downloadCount: book.download_count,
   id: book.id,
@@ -10,13 +10,7 @@ const mapBooks = (books) => books.map((book) => ({
   title: book.title
 }))
 
-const sorts = {
-  download: (a, b) => a.downloadCount > b.downloadCount
-}
-
-const sortBooks = (books, sort) => books.sort(sorts[sort])
-
-export default async function searchByInput ({ query, sort }) {
+export default async function searchByInput ({ query }) {
   try {
     const searchParameters = new URLSearchParams()
     searchParameters.append('search', query)
@@ -25,8 +19,10 @@ export default async function searchByInput ({ query, sort }) {
     const jsonData = await response.json()
     const books = jsonData.results
 
-    return sortBooks(mapBooks(books), sort)
+    return mapBooks(books)
   } catch (error) {
+    // ! debug
+    console.error(error)
     throw new Error('Error searching books', error)
   }
 }
