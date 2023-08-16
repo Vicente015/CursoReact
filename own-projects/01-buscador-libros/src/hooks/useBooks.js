@@ -34,5 +34,5 @@ export default function useBooks ({ query }) {
     setBooks(sortedBooks)
   }, [books])
 
-  return { books, error, getBooks, loading, sortBooks }
+  return { books, error, getBooks, loading, setBooks, sortBooks }
 }

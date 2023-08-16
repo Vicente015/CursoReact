@@ -1,95 +1,71 @@
 import './App.css'
+import * as Ariakit from '@ariakit/react'
 import debounce from 'just-debounce-it'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback } from 'react'
+
 import Books from './components/Books'
+import Header from './components/Header'
+import SearchInput from './components/SearchInput'
 import useBooks from './hooks/useBooks'
 
-function useQuery () {
-  const [query, updateQuery] = useState('')
-  const [error, setError] = useState(null)
-  const isFirstInput = useRef(true)
-
-  // Usar zod aquí sería god 🥵
-  useEffect(() => {
-    // ? Evitar que valide cuando el input esté vacío
-    if (isFirstInput.current) {
-      isFirstInput.current = query === ''
-      return
-    }
-    if (query === '') {
-      setError('No se puede buscar una película vacía.')
-      return
-    }
-
-    if (/^\d+$/.test(query)) {
-      setError('No se puede buscar una película con un número')
-      return
-    }
-
-    if (query.length < 3) {
-      setError('La búsqueda debe tener al menos 3 caracteres.')
-      return
-    }
-
-    setError(null)
-  }, [query])
-
-  return { error, query, updateQuery }
-}
+// const [sort, updateSort] = useState(null)
+/* const onSortSelectChange = (event) => {
+  console.debug('debug', event.target.value)
+  updateSort(event.target.value)
+  sortBooks({ sort })
+} */
+/*
+  <select name='sort' id='sort' onChange={onSortSelectChange}>
+    <option value=''>Ordenar por:</option>
+    <option value='downloadA'>Descargas ascendente</option>
+    <option value='downloadD'>Descargas descendente</option>
+  </select>
+*/
 
 function App () {
-  const { error: queryError, query, updateQuery } = useQuery()
-  const [sort, updateSort] = useState(null)
-  const { books, error: fetchError, getBooks, loading, sortBooks } = useBooks({ query })
+  const form = Ariakit.useFormStore({
+    defaultValues: { query: '' },
+    setValues: (values) => {
+      if (values.query === '') setBooks([])
+      if (values.query) onInputChange(values.query)
+    }
+  })
+  const { books, error: fetchError, getBooks, loading, setBooks } = useBooks({ query: form.getValue('query') })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedGetBooks = useCallback(
     debounce(query => getBooks({ query }), 500)
     , [getBooks])
 
-  // TODO: Se ejecuta el fetch aunque la validación de error ???
-  const onInputChange = (event) => {
-    const newQuery = event.target.value
-    updateQuery(newQuery)
-    debouncedGetBooks(query)
-  }
-
-  const onSortSelectChange = (event) => {
-    console.debug('debug', event.target.value)
-    updateSort(event.target.value)
-    sortBooks({ sort })
-  }
-
-  const onSubmit = (event) => {
-    event.preventDefault()
-    getBooks({ query })
+  const onInputChange = (newQuery) => {
+    // ? Valida el formulario: si es correcto hace la query
+    form.validate().then((isValid) => {
+      if (isValid === true) debouncedGetBooks(form.getValue('query'))
+    })
   }
 
   return (
-    <div>
-      <header>
-        <h1>Buscador de libros 📚🔍</h1>
-        <form onSubmit={onSubmit}>
-          <input
-            style={{
-              outline: '2px solid transparent',
-              outlineColor: queryError ? 'red' : 'transparent'
-            }}
-            id='query'
-            type='text'
-            value={query}
-            placeholder='Harry Potter, Romeo and Juliet...'
-            onChange={onInputChange}
-          />
-          <select name='sort' id='sort' onChange={onSortSelectChange}>
-            <option value=''>Ordenar por:</option>
-            <option value='downloadA'>Descargas ascendente</option>
-            <option value='downloadD'>Descargas descendente</option>
-          </select>
-          <button type='submit'>Buscar</button>
-        </form>
-        {queryError && <p style={{ color: 'red' }}>{queryError}</p>}
-      </header>
-      <main>
+    <div className='dkk'>
+      <Header />
+      <main className='bg-neutral-100 w-full h-full'>
+        <section>
+          <Ariakit.Form
+            store={form}
+            aria-labelledby='search-label'
+          >
+            <div className='field'>
+              <SearchInput
+                name={form.names.query}
+                store={form}
+                type='text'
+                placeholder='Romeo And Juliet'
+                required
+                title='Search'
+              />
+            </div>
+            <Ariakit.FormError name={form.names.query} />
+          </Ariakit.Form>
+        </section>
         <section>
           {fetchError
             ? <p>Error, pruebe de nuevo.</p>
