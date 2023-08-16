@@ -45,12 +45,26 @@ function App () {
   }
 
   return (
-    <div className='dkk'>
+    <div className='page'>
       <Header />
-      <main className='bg-neutral-100 w-full h-full'>
-        <section>
+      <main
+        className='
+          flex flex-col items-center mt-4
+          mx-5
+          pb-10
+          sm:mx-10
+          md:mx-20
+          lg:mx-40
+          xl:mx-60
+        '
+        style={{
+          // 'inline-size': 'min(75ch, 100% - 4rem)'
+        }}
+      >
+        <section className='w-full'>
           <Ariakit.Form
             store={form}
+            resetOnSubmit={false}
             aria-labelledby='search-label'
           >
             <div className='field'>

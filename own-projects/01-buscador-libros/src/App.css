@@ -6,8 +6,9 @@
 body {
   min-height: 100vh;
 }
-main {
+.page {
   min-height: 100vh;
+  background-color: theme(colors.neutral.100);
 }
 
 /* véase https://twitter.com/wooorm/status/1641153799967391751*/
@@ -15,4 +16,27 @@ main {
   box-sizing: border-box;
   line-height: calc(1em + 1ex);
 }
+svg {
+  color: theme(colors.neutral.700);
+}
+
+@layer components {
+  .icon-1 {
+    width: 10px;
+    height: 10px;
+  }
+  .icon-2 {
+    width: 15px;
+    height: 15px;
+  }
+  .icon-3 {
+    width: 20px;
+    height: 20px;
+  }
+  .icon-4 {
+    width: 25px;
+    height: 25px;
+  }
+}
+
 

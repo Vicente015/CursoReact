@@ -1,3 +1,4 @@
+// import Balancer from 'react-wrap-balancer'
 
 export function Tag ({ name }) {
   return (
@@ -31,8 +32,8 @@ export function BookCard ({ book }) {
         <img className='w-full h-full rounded-l-xl' src={book.coverImage} alt={`${book.title} Book Cover Image`} />
       </section>
       <section className='book-info py-2 pr-2 flex flex-col'>
-        <h3 className='text-lg font-semibold text-neutral-800 text-ellipsis line-clamp-5 leading-snug'>{book.title}</h3>
-        <p className='text-base font-normal text-neutral-800 text-ellipsis line-clamp-2 leading-tight'>{book.author}</p>
+        <h3 className='text-lg font-semibold text-neutral-800 text-ellipsis line-clamp-5'>{book.title}</h3>
+        <p className='text-base font-normal text-neutral-800 text-ellipsis line-clamp-2'>{book.author}</p>
         <ul className='flex flex-row gap-4 my-2'>
           <Tag name='Tag' />
         </ul>
@@ -46,7 +47,7 @@ export function ListOfBooks ({ books }) {
   return (
     <ul
       className='
-        mx-20 grid gap-4 mt-8
+        grid gap-4 mt-8
         sm:grid-cols-[repeat(1,_minmax(200px,_1fr))]
         md:grid-cols-[repeat(2,_minmax(200px,_1fr))]
         lg:grid-cols-[repeat(4,_minmax(200px,_1fr))]
