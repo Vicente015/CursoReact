@@ -9,8 +9,8 @@ export default function Header () {
       border-b-neutral-300
     '
     >
-      <h1 id='search-label' className='text-4xl font-bold text-neutral-800'>Buscador de libros 🔍</h1>
-      <p className='text-xl font-medium text-neutral-700'>Un buscador interactivo para el «Proyecto Gutenberg».</p>
+      <h1 id='search-label' className='text-3xl font-bold text-neutral-800'>Buscador de libros 🔍</h1>
+      <p className='text-lg font-medium text-neutral-700'>Un buscador interactivo para el «Proyecto Gutenberg».</p>
     </header>
   )
 }
