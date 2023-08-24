@@ -4,7 +4,7 @@ import debounce from 'just-debounce-it'
 import { useCallback } from 'react'
 
 import Books from './components/Books'
-import SortBySelect from './components/form/Select'
+import Select from './components/form/Select'
 import SelectCombobox from './components/form/SelectCombobox'
 import Header from './components/Header'
 import SearchInput from './components/SearchInput'
@@ -12,8 +12,11 @@ import useBooks from './hooks/useBooks'
 
 import mockResults from './mocks/results.json'
 
-const genres =
+const subjects =
   [...new Set(mockResults.results.flatMap(result => result.subjects))]
+
+const genres =
+  [...new Set(mockResults.results.flatMap(result => result.bookshelves))]
 
 // const [sort, updateSort] = useState(null)
 /* const onSortSelectChange = (event) => {
@@ -54,7 +57,7 @@ function App () {
   }
 
   return (
-    <div className='page'>
+    <div className='page bg-bg-primary'>
       <Header />
       <main
         className='
@@ -73,8 +76,8 @@ function App () {
           '
         >
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-neutral-800'>Orden</h3>
-            <SortBySelect
+            <h3 className='text-lg font-semibold text-text-primary'>Orden</h3>
+            <Select
               label='Ordenar por'
               defaultValue='publicación'
               items={['publicación', 'descargas']}
@@ -82,28 +85,32 @@ function App () {
             />
           </div>
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-neutral-800'>Idiomas</h3>
-            <SortBySelect
+            <h3 className='text-lg font-semibold text-text-primary'>Idiomas</h3>
+            <Select
               label='Elige los idiomas'
               items={['Español', 'Inglés']}
               defaultValue='Inglés'
             />
           </div>
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-neutral-800'>Géneros literarios</h3>
+            <h3 className='text-lg font-semibold text-text-primary'>Géneros literarios</h3>
             {
               // todo: El showValueInside hace que cambie todo de tamaño constantemente
             }
-            <SortBySelect
+            <Select
               label='Géneros literarios'
-              items={['Drama', 'Fiction', 'History', 'Art']}
+              items={genres}
               defaultValue={[]}
               multiple
             />
           </div>
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-neutral-800'>Géneros literarios</h3>
-            <SelectCombobox items={genres} label='Género literario' />
+            <h3 className='text-lg font-semibold text-text-primary'>Géneros literario</h3>
+            <SelectCombobox items={genres} label='Géneros literarios' defaultValue={[]} multiple />
+          </div>
+          <div className='w-full'>
+            <h3 className='text-lg font-semibold text-text-primary'>Temáticas</h3>
+            <SelectCombobox items={subjects} label='Temáticas' />
           </div>
         </aside>
         <section
@@ -125,13 +132,13 @@ function App () {
                   title='Search'
                 />
               </div>
-              <Ariakit.FormError name={form.names.query} />
+              <Ariakit.FormError name={form.names.query} className='text-text-secondary' />
             </Ariakit.Form>
           </section>
           <section>
             {fetchError
-              ? <p>Error, pruebe de nuevo.</p>
-              : (loading ? <p>Cargando...</p> : <Books books={books} />)}
+              ? <p className='text-text-secondary'>Error, pruebe de nuevo.</p>
+              : (loading ? <p className='text-text-secondary'>Cargando...</p> : <Books books={books} />)}
           </section>
         </section>
       </main>

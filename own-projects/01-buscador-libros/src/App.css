@@ -2,13 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-bg-primary: theme(colors.neutral.100);
+    --color-bg-secondary: theme(colors.neutral.150);
+    --color-bg-tertiary: theme(colors.neutral.200);
+    --color-bg-extra: theme(colors.neutral.300);
+
+    --color-text-primary: theme(colors.neutral.800);
+    --color-text-secondary: theme(colors.neutral.700);
+    --color-text-tertiary: theme(colors.neutral.500);
+
+    --color-accent-primary: theme(colors.blue.600);
+    --color-accent-secondary: theme(colors.blue.500);
+    --color-accent-tertiary: theme(colors.blue.400);
+    --color-error: theme(colors.red.500);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg-primary: theme(colors.neutral.800);
+      --color-bg-secondary: theme(colors.neutral.900);
+      --color-bg-tertiary: theme(colors.neutral.950);
+      --color-bg-extra: theme(colors.neutral.600);
+
+      --color-text-primary: theme(colors.neutral.100);
+      --color-text-secondary: theme(colors.neutral.200);
+      --color-text-tertiary: theme(colors.neutral.400);
+
+      --color-accent-primary: theme(colors.blue.600);
+      --color-accent-secondary: theme(colors.blue.500);
+      --color-accent-tertiary: theme(colors.blue.400);
+      --color-error: theme(colors.red.500);
+    }
+  }
+}
+
 /* véase https://www.freecodecamp.org/news/html-page-width-height/ */
 body {
   min-height: 100vh;
 }
 .page {
   min-height: 100vh;
-  background-color: theme(colors.neutral.100);
 }
 
 /* véase https://twitter.com/wooorm/status/1641153799967391751*/
@@ -17,7 +51,7 @@ body {
   line-height: calc(1em + 1ex);
 }
 svg {
-  color: theme(colors.neutral.700);
+  color: theme(colors.text-secondary)
 }
 
 @layer components {

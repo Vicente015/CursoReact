@@ -7,6 +7,7 @@ const mapBooks = (books) => books.map((book) => ({
   downloadCount: book.download_count,
   id: book.id,
   languages: book.languages,
+  tags: book.subjects[0].split(' -- '),
   title: book.title
 }))
 

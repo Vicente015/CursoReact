@@ -7,7 +7,7 @@ function renderValue (value) {
   return `${value.length} seleccionados`
 }
 
-export default function SortBySelect ({ defaultValue, items, label, multiple = false, showValueInside = false }) {
+export default function Select ({ defaultValue, items, label, multiple = false, showValueInside = false }) {
   const selectStore = Ariakit.useSelectStore({
     animated: true,
     defaultValue
@@ -18,16 +18,16 @@ export default function SortBySelect ({ defaultValue, items, label, multiple = f
   return (
     <div className='
       flex flex-row items-center gap-0 m-0 flex-nowrap whitespace-nowrap
-    bg-neutral-150 rounded-md shadow-sm
-      border-2 border-solid border-neutral-250 w-full
-    hover:border-blue-500 focus-within:border-blue-500
+      bg-bg-secondary rounded-md shadow-sm
+      border-2 border-solid border-bg-tertiary w-full
+      hover:border-accent-secondary focus-within:border-accent-secondary
     '
     >
       <Ariakit.Select
         store={selectStore}
         className='
           flex flex-row items-center gap-0 m-0 justify-between px-2 w-full
-        text-neutral-700 font-semibold text-lg
+        text-text-secondary font-semibold text-lg
           focus-visible:outline-none
         '
       >
@@ -35,7 +35,7 @@ export default function SortBySelect ({ defaultValue, items, label, multiple = f
           <Ariakit.SelectLabel
             store={selectStore}
             style={{ cursor: 'pointer' }}
-            className='text-neutral-700 font-medium text-lg'
+            className='text-text-secondary font-medium text-lg'
           >
             {label}
           </Ariakit.SelectLabel>
@@ -46,16 +46,18 @@ export default function SortBySelect ({ defaultValue, items, label, multiple = f
       {mounted && (
         <Ariakit.SelectPopover
           className='
-            rounded-lg p-2 cursor-pointer shadow-sm bg-neutral-150 w-full
-            border-2 border-solid border-neutral-250 flex flex-col gap-0 justify-center
-            child:text-base child:font-medium child:text-neutral-700
+            rounded-lg p-2 cursor-pointer shadow-sm bg-bg-secondary w-full
+            border-2 border-solid border-bg-tertiary flex flex-col gap-0 justify-center
+            child:text-base child:font-medium child:text-text-secondary
             child:rounded-md child:w-full child:px-1 child:py-1
           child-active:bg-blue-500 child-active:text-neutral-100
             child:flex child:flex-row child:gap-2 child:items-center
             z-50 overflow-auto overscroll-contain opacity-0
             data-[enter]:opacity-100 data-[enter]:translate-y-0
+            whitespace-normal
           '
           style={{
+            'max-height': 'min(var(--popover-available-height, 300px), 300px)',
             transform: 'translateY(2px)',
             'transition-duration': '150ms',
             'transition-property': 'opacity, transform',

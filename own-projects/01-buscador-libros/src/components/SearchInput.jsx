@@ -47,12 +47,12 @@ export default function SearchInput ({ name, store, ...properties }) {
         flex flex-row items-center justify-between gap-2
         rounded-md
         px-3 py-2
-        bg-neutral-100
-        border-2 border-solid border-blue-500
+        bg-bg-primary
+        border-2 border-solid border-accent-secondary
         shadow-[0px_2px_0px_0px] shadow-blue-500
         ${store.getError(name) === undefined
-          ? 'hover:border-blue-600 hover:shadow-blue-600 focus-within:border-blue-600 focus-within:shadow-blue-600'
-          : 'shadow-red-500 border-red-500'}
+          ? 'hover:border-accent-primary hover:shadow-blue-600 focus-within:border-accent-primary focus-within:shadow-blue-600'
+          : 'shadow-red-500 border-error'}
       `}
     >
       <IoSearchSharp aria-hidden className='icon-4' />
@@ -63,15 +63,16 @@ export default function SearchInput ({ name, store, ...properties }) {
         className='
           bg-transparent outline-none
           w-full h-full
-        placeholder:text-neutral-500 placeholder:font-normal text-lg
+          text-text-secondary
+          placeholder:text-text-tertiary placeholder:font-normal text-lg
         '
         name={name} {...properties}
       />
       <Ariakit.FormReset className='flex flex-row gap-1 items-center'>
         <span
           className='
-            tracking-tighter font-mono text-neutral-800 text-sm font-semibold
-            px-2 py-1 bg-neutral-300 rounded-md
+            tracking-tighter font-mono text-text-primary text-sm font-semibold
+            px-2 py-1 bg-bg-extra rounded-md
           '
         >
           ESC
