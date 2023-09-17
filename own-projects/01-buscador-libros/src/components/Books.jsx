@@ -38,8 +38,14 @@ export function BookCard ({ book }) {
           {book.tags.map(tag => (
             <Tag name={tag} key={tag} />
           ))}
+          {book.languages.map(tag => (
+            <Tag name={tag} key={tag} />
+          ))}
         </ul>
-        <small className='text-text-secondary text-xs font-mono self-end mt-auto'>💿 {book.downloadCount}</small>
+        <section className='flex flex-row gap-1 mt-auto self-end'>
+          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>🆔 {book.id}</small>
+          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>💿 {book.downloadCount}</small>
+        </section>
       </section>
     </article>
   )
@@ -74,9 +80,10 @@ export function NoBooks () {
 }
 
 export default function Books ({ books }) {
+  // ? Only show books with `show = true`
   return (
     books && books.length > 0
-      ? <ListOfBooks books={books} />
+      ? <ListOfBooks books={books.filter((book) => book.show === true)} />
       : <NoBooks />
   )
 }

@@ -1,36 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
 import * as Ariakit from '@ariakit/react'
 import debounce from 'just-debounce-it'
-import { useCallback } from 'react'
-
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Books from './components/Books'
+
 import Select from './components/form/Select'
 import SelectCombobox from './components/form/SelectCombobox'
 import Header from './components/Header'
 import SearchInput from './components/SearchInput'
 import useBooks from './hooks/useBooks'
-
-import mockResults from './mocks/results.json'
-
-const subjects =
-  [...new Set(mockResults.results.flatMap(result => result.subjects))]
-
-const genres =
-  [...new Set(mockResults.results.flatMap(result => result.bookshelves))]
-
-// const [sort, updateSort] = useState(null)
-/* const onSortSelectChange = (event) => {
-  console.debug('debug', event.target.value)
-  updateSort(event.target.value)
-  sortBooks({ sort })
-} */
-/*
-  <select name='sort' id='sort' onChange={onSortSelectChange}>
-    <option value=''>Ordenar por:</option>
-    <option value='downloadA'>Descargas ascendente</option>
-    <option value='downloadD'>Descargas descendente</option>
-  </select>
-*/
 
 function App () {
   const form = Ariakit.useFormStore({
@@ -41,7 +20,20 @@ function App () {
       onInputChange(values.query)
     }
   })
-  const { books, error: fetchError, getBooks, loading, setBooks } = useBooks({ query: form.getValue('query') })
+
+  const { books, error: fetchError, filterBooks, getBooks, loading, setBooks, sortBooks } = useBooks({ query: form.getValue('query') })
+  const languages = useMemo(
+    () => [...new Set(books.flatMap(book => book.languages))],
+    [books]
+  )
+  const tags = useMemo(
+    () => [...new Set(books.flatMap(book => book.tags))],
+    [books]
+  )
+  const bookshelves = useMemo(
+    () => [...new Set(books.flatMap(book => book.bookshelves))],
+    [books]
+  )
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedGetBooks = useCallback(
@@ -55,6 +47,28 @@ function App () {
       if (isValid === true) debouncedGetBooks(form.getValue('query'))
     })
   }
+
+  // # Selects states
+  const [sortState, setSortSate] = useState()
+  const [langFilterState, setLangFilterState] = useState()
+  const [bookshelfFilterState, setBookshelfFilterState] = useState()
+  const [tagsFilterState, setTagsFilterState] = useState()
+
+  useEffect(() => {
+    sortBooks({ sort: sortState })
+  }, [sortState])
+
+  useEffect(() => {
+    filterBooks({ filter: 'lang', value: langFilterState })
+  }, [langFilterState])
+
+  useEffect(() => {
+    filterBooks({ filter: 'bookshelves', value: bookshelfFilterState })
+  }, [bookshelfFilterState])
+
+  useEffect(() => {
+    filterBooks({ filter: 'tags', value: tagsFilterState })
+  }, [tagsFilterState])
 
   return (
     <div className='page bg-bg-primary'>
@@ -72,46 +86,56 @@ function App () {
         <aside
           className='
             flex flex-col items-start justify-start flex-nowrap
-            gap-4 w-fit
+            gap-4 w-full max-w-[16rem]
           '
         >
           <div className='w-full'>
             <h3 className='text-lg font-semibold text-text-primary'>Orden</h3>
             <Select
               label='Ordenar por'
-              defaultValue='publicación'
-              items={['publicación', 'descargas']}
+              items={['id', 'descargas']}
+              defaultValue='Descargas'
               showValueInside
+              value={sortState}
+              onChange={setSortSate}
             />
           </div>
           <div className='w-full'>
             <h3 className='text-lg font-semibold text-text-primary'>Idiomas</h3>
             <Select
               label='Elige los idiomas'
-              items={['Español', 'Inglés']}
-              defaultValue='Inglés'
+              items={languages}
+              defaultValue='none'
+              value={langFilterState}
+              onChange={setLangFilterState}
             />
           </div>
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-text-primary'>Géneros literarios</h3>
-            {
-              // todo: El showValueInside hace que cambie todo de tamaño constantemente
-            }
-            <Select
-              label='Géneros literarios'
-              items={genres}
+            <h3 className='text-lg font-semibold text-text-primary'>Librería</h3>
+            <SelectCombobox
+              items={bookshelves}
+              label='Librería'
+              value={bookshelfFilterState}
               defaultValue={[]}
+              onChange={setBookshelfFilterState}
               multiple
             />
           </div>
           <div className='w-full'>
-            <h3 className='text-lg font-semibold text-text-primary'>Géneros literario</h3>
-            <SelectCombobox items={genres} label='Géneros literarios' defaultValue={[]} multiple />
+            <h3 className='text-lg font-semibold text-text-primary'>Etiquetas</h3>
+            <SelectCombobox
+              items={tags}
+              label='Etiquetas'
+              defaultValue={[]}
+              value={tagsFilterState}
+              onChange={setTagsFilterState}
+              multiple
+            />
           </div>
-          <div className='w-full'>
-            <h3 className='text-lg font-semibold text-text-primary'>Temáticas</h3>
-            <SelectCombobox items={subjects} label='Temáticas' />
-          </div>
+          {/* <div className='w-full'>
+            <h3 className='text-lg font-semibold text-text-primary'>Rango de fechas</h3>
+            <DateSelect />
+          </div> */}
         </aside>
         <section
           className='flex flex-col items-center w-full'

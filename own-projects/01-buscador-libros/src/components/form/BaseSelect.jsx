@@ -1,34 +1,20 @@
 import * as Ariakit from '@ariakit/react'
 import { IoChevronDownOutline } from 'react-icons/io5'
 
-function renderValue (value) {
-  if (value.length === 0) return ''
-  if (value.length === 1) return value[0]
-  return `${value.length} seleccionados`
-}
-
-export default function Select ({ defaultValue, items, label, multiple = false, onChange, showValueInside = false, value }) {
+export default function BaseSelect ({ items, label, showValueInside }) {
   const store = Ariakit.useSelectStore({
-    animated: true,
-    defaultValue,
-    setValue: onChange,
-    value
+    animated: true
   })
-  store.useState('value')
+
+  const value = store.useState('value')
   const mounted = store.useState('mounted')
 
   return (
-    <div className='
-      flex flex-row items-center gap-0 m-0 flex-nowrap whitespace-nowrap
-      bg-bg-secondary rounded-md shadow-sm
-      border-2 border-solid border-bg-tertiary w-full
-      hover:border-accent-secondary focus-within:border-accent-secondary
-    '
-    >
+    <>
       <Ariakit.Select
         store={store}
         className='
-          flex flex-row items-center gap-0 m-0 justify-between px-2 w-full
+          flex flex-row items-center gap-0 m-0 justify-between px-2 w-fit
           text-text-secondary font-semibold text-lg
           focus-visible:outline-none
         '
@@ -39,9 +25,9 @@ export default function Select ({ defaultValue, items, label, multiple = false, 
             style={{ cursor: 'pointer' }}
             className='text-text-secondary font-medium text-lg'
           >
-            {label}
+            {value ? '' : label}
           </Ariakit.SelectLabel>
-          {showValueInside && (multiple ? renderValue(value) : value)}
+          {showValueInside && value}
         </div>
         <IoChevronDownOutline aria-disabled aria-label='Chevron down' className='h-5 w-5' />
       </Ariakit.Select>
@@ -73,12 +59,11 @@ export default function Select ({ defaultValue, items, label, multiple = false, 
         >
           {items.map((item) => (
             <Ariakit.SelectItem value={item} title={item} key={item}>
-              {multiple && <Ariakit.SelectItemCheck />}
               {item}
             </Ariakit.SelectItem>
           ))}
         </Ariakit.SelectPopover>
       )}
-    </div>
+    </>
   )
 }

@@ -3,13 +3,21 @@ import { matchSorter } from 'match-sorter'
 import { useDeferredValue, useMemo } from 'react'
 import { IoChevronDownOutline } from 'react-icons/io5'
 
-export default function SelectCombobox ({ defaultValue, items, label, multiple }) {
-  const combobox = Ariakit.useComboboxStore({ resetValueOnHide: true })
-  const select = Ariakit.useSelectStore({ animated: true, combobox, defaultValue })
+export default function SelectCombobox ({ defaultValue, items, label, multiple, onChange, value }) {
+  const combobox = Ariakit.useComboboxStore({
+    resetValueOnHide: true
+  })
+  const store = Ariakit.useSelectStore({
+    animated: true,
+    combobox,
+    defaultValue,
+    setValue: onChange,
+    value
+  })
 
-  const value = combobox.useState('value')
-  const deferredValue = useDeferredValue(value)
-  const mounted = select.useState('mounted')
+  const comboValue = combobox.useState('value')
+  const deferredValue = useDeferredValue(comboValue)
+  const mounted = store.useState('mounted')
 
   const matches = useMemo(() => {
     return matchSorter(items, deferredValue, {
@@ -26,7 +34,7 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple }
     '
     >
       <Ariakit.Select
-        store={select}
+        store={store}
         className='
           flex flex-row items-center gap-0 m-0 justify-between px-2 w-full
           text-text-secondary font-semibold text-lg
@@ -35,7 +43,7 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple }
       >
         <div className='flex flex-row gap-1'>
           <Ariakit.SelectLabel
-            store={select}
+            store={store}
             style={{ cursor: 'pointer' }}
             className='text-text-secondary font-medium text-lg'
           >
@@ -64,7 +72,7 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple }
             'transition-property': 'opacity, transform',
             'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)'
           }}
-          store={select}
+          store={store}
           gutter={4}
           arrowPadding={0}
           hideOnEscape
@@ -73,7 +81,7 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple }
           <div
             className='
               rounded-md bg-bg-tertiary
-              sticky top-0 w-fit shadow-sm
+              sticky top-0 shadow-sm
             '
           >
             <Ariakit.Combobox
@@ -88,12 +96,12 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple }
             />
           </div>
           <Ariakit.ComboboxList store={combobox} className='child-active:bg-blue-500 child-active:text-neutral-100 child:flex child:flex-row child:gap-1 child:items-center'>
-            {matches.map((value) => (
+            {matches.map((comboValue) => (
               <Ariakit.ComboboxItem
-                key={value}
+                key={comboValue}
                 focusOnHover
                 className='select-item'
-                render={<Ariakit.SelectItem value={value} title={value}>{multiple && <Ariakit.SelectItemCheck />}{value}</Ariakit.SelectItem>}
+                render={<Ariakit.SelectItem value={comboValue} title={comboValue}>{multiple && <Ariakit.SelectItemCheck />}{comboValue}</Ariakit.SelectItem>}
               />
             ))}
           </Ariakit.ComboboxList>

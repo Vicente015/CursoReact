@@ -47,7 +47,7 @@ export default function SearchInput ({ name, store, ...properties }) {
         flex flex-row items-center justify-between gap-2
         rounded-md
         px-3 py-2
-        bg-bg-primary
+        bg-bg-secondary
         border-2 border-solid border-accent-secondary
         shadow-[0px_2px_0px_0px] shadow-blue-500
         ${store.getError(name) === undefined
