@@ -1,7 +1,31 @@
 import * as Ariakit from '@ariakit/react'
-import SearchInput from './components/SearchInput'
+import debounce from 'just-debounce-it'
+import { useCallback } from 'react'
+import SearchInput from './form/SearchInput'
 
-export default function SearchBar ({ form }) {
+export default function SearchBar ({ getBooks, query, setQuery }) {
+  const form = Ariakit.useFormStore({
+    setValues: (values) => {
+      console.debug('valuesChanged', values)
+      onInputChange(values.query)
+      setQuery(values)
+    },
+    values: query
+  })
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedGetBooks = useCallback(
+    debounce(query => getBooks({ query }), 500),
+    [getBooks])
+
+  const onInputChange = (newQuery) => {
+    console.debug('called validate')
+    // ? Valida el formulario: si es correcto hace la query
+    form.validate().then((isValid) => {
+      if (isValid === true) debouncedGetBooks(newQuery)
+    })
+  }
+
   return (
     <section className='w-full'>
       <Ariakit.Form
@@ -11,7 +35,7 @@ export default function SearchBar ({ form }) {
       >
         <div className='field'>
           <SearchInput
-            name={form.names.query}
+            name='query'
             store={form}
             type='text'
             placeholder='Romeo And Juliet'

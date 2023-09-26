@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import Select from './form/Select'
 import SelectCombobox from './form/SelectCombobox'
 
-export default function Filters ({ books }) {
+export default function Filters ({ books, onFilterChange }) {
   const languages = useMemo(
     () => [...new Set(books.flatMap(book => book.languages))],
     [books]
@@ -30,8 +30,6 @@ export default function Filters ({ books }) {
           items={['id', 'descargas']}
           defaultValue='Descargas'
           showValueInside
-          value={sortState}
-          onChange={setSortSate}
         />
       </div>
       <div className='w-full'>
@@ -39,9 +37,8 @@ export default function Filters ({ books }) {
         <Select
           label='Elige los idiomas'
           items={languages}
-          defaultValue='none'
-          value={langFilterState}
-          onChange={setLangFilterState}
+          onChange={onFilterChange}
+          showValueInside
         />
       </div>
       <div className='w-full'>
@@ -49,9 +46,8 @@ export default function Filters ({ books }) {
         <SelectCombobox
           items={bookshelves}
           label='Librería'
-          value={bookshelfFilterState}
           defaultValue={[]}
-          onChange={setBookshelfFilterState}
+          onChange={onFilterChange}
           multiple
         />
       </div>
@@ -61,8 +57,7 @@ export default function Filters ({ books }) {
           items={tags}
           label='Etiquetas'
           defaultValue={[]}
-          value={tagsFilterState}
-          onChange={setTagsFilterState}
+          onChange={onFilterChange}
           multiple
         />
       </div>

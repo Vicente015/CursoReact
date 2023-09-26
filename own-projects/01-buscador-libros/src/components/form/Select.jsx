@@ -7,13 +7,16 @@ function renderValue (value) {
   return `${value.length} seleccionados`
 }
 
-export default function Select ({ defaultValue, items, label, multiple = false, onChange, showValueInside = false, value }) {
+export default function Select ({ defaultValue, items, label, multiple = false, onChange, showValueInside = false }) {
   const store = Ariakit.useSelectStore({
     animated: true,
     defaultValue,
-    setValue: onChange,
-    value
+    setValue: (value) => {
+      store.setValue(value)
+      onChange({ filter: label, value })
+    }
   })
+  const value = store.useState().value
   store.useState('value')
   const mounted = store.useState('mounted')
 

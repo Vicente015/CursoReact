@@ -11,7 +11,7 @@ export default function SelectCombobox ({ defaultValue, items, label, multiple, 
     animated: true,
     combobox,
     defaultValue,
-    setValue: onChange,
+    setValue: (value) => onChange({ filter: label, value }),
     value
   })
 
