@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useBooks from '../hooks/useBooks'
+import useFilter from '../hooks/useFilter'
 import BookResults from './BookResults'
 import Filters from './Filters'
 import SearchBar from './SearchBar'
@@ -10,13 +10,14 @@ export default function FilterableBookResults () {
   const [query, setQuery] = useState({ query: '' })
   const [enabledFilters, setEnabledFilters] = useState(new Map())
   const { books, error: fetchError, getBooks, loading } = useBooks({ query })
+  const [filteredBooks, setFilteredBooks] = useState()
+  const { filterBooks } = useFilter({ books, setFilteredBooks, enabledFilters })
 
-  // todo: Hacer lógica para filtrar contenido (books.filter o copia de books (?), tan solo hay que pasar el array de filtros activados
   // todo: Hacer lógica para el sort
   const onFilterChange = useCallback(({ filter, value }) => {
     !!value && value?.length > 0 ? enabledFilters.set(filter, value) : enabledFilters.delete(filter)
-    console.debug('filterChanged', { entries: [...enabledFilters.entries()], filter, value })
-  }, [])
+    filterBooks({ enabledFilters, books })
+  }, [filterBooks, books])
 
   return (
     <main
@@ -29,7 +30,7 @@ export default function FilterableBookResults () {
       <Filters books={books} onFilterChange={onFilterChange} />
       <section className='flex flex-col items-center w-full'>
         <SearchBar query={query} getBooks={getBooks} setQuery={setQuery} />
-        <BookResults books={books} fetchError={fetchError} loading={loading} />
+        <BookResults books={filteredBooks ?? books} fetchError={fetchError} loading={loading} />
       </section>
     </main>
   )
