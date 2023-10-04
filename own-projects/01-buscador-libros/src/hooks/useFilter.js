@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from 'react'
 
 const filters = {
-  'Librería': (item, value) => value.some((bookshelf) => item.bookshelves.includes(bookshelf)),
-  'Idiomas': (item, value) => item.languages.includes(value),
-  'Etiquetas': (item, value) => value.some((tag) => item.tags.includes(tag)),
+  Etiquetas: (item, value) => value.some((tag) => item.tags.includes(tag)),
+  Idiomas: (item, value) => item.languages.includes(value),
+  Librería: (item, value) => value.some((bookshelf) => item.bookshelves.includes(bookshelf))
 }
 
 const sorts = {
@@ -13,11 +13,11 @@ const sorts = {
 
 export default function useFilter ({ setFilteredBooks }) {
   const filterBooks = useCallback(({ books, enabledFilters }) => {
-    let acc
-    for (let [name, value] of enabledFilters.entries()) {
-      if (!name.includes('Ordenar')) acc = books.filter((item) => filters[name](item, value))
+    let accumulator_
+    for (const [name, value] of enabledFilters.entries()) {
+      if (!name.includes('Ordenar')) accumulator_ = books.filter((item) => filters[name](item, value))
     }
-    setFilteredBooks(acc)
+    setFilteredBooks(accumulator)
   }, [])
 
   const sortBooks = useCallback(({ books, sort }) => {
