@@ -11,13 +11,15 @@ export default function FilterableBookResults () {
   const [enabledFilters, setEnabledFilters] = useState(new Map())
   const { books, error: fetchError, getBooks, loading } = useBooks({ query })
   const [filteredBooks, setFilteredBooks] = useState()
-  const { filterBooks } = useFilter({ books, setFilteredBooks, enabledFilters })
+  const { filterBooks, sortBooks } = useFilter({ books, setFilteredBooks, enabledFilters })
 
   // todo: Hacer lógica para el sort
   const onFilterChange = useCallback(({ filter, value }) => {
     !!value && value?.length > 0 ? enabledFilters.set(filter, value) : enabledFilters.delete(filter)
+    console.debug('debug', { filter, value })
     filterBooks({ enabledFilters, books })
-  }, [filterBooks, books])
+    sortBooks({ books: filteredBooks ?? books, sort: value })
+  }, [filterBooks, sortBooks, filteredBooks, books])
 
   return (
     <main

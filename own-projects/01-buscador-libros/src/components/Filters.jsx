@@ -29,6 +29,7 @@ export default function Filters ({ books, onFilterChange }) {
           label='Ordenar por'
           items={['id', 'descargas']}
           defaultValue='Descargas'
+          onChange={onFilterChange}
           showValueInside
         />
       </div>
