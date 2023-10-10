@@ -1,15 +1,19 @@
-// import Balancer from 'react-wrap-balancer'
+import { AiOutlineFieldNumber } from 'react-icons/ai'
+import { IoArrowDown, IoPricetag } from 'react-icons/io5'
 
 export function Tag ({ name }) {
   return (
     <li className='
       flex flex-row items-center gap-1 px-2 py-1
+      content-center
       bg-bg-extra rounded-lg
-      hover:bg-opacity-90 cursor-pointer
+      hover:bg-accent-primary cursor-pointer
       '
     >
-      <span className='text-text-secondary text-sm'>🏷</span>
-      <p className='text-sm font-medium text-text-secondary'>{name}</p>
+      <IoPricetag aria-disabled aria-label='Tag icon' className='min-h-[15px] min-w-[15px] text-text-tertiary' />
+      <p className='text-sm font-medium text-text-secondary leading-snug' title={name}>
+        {name.length > 6 ? name.slice(0, 6) + '...' : name}
+      </p>
     </li>
   )
 }
@@ -34,7 +38,9 @@ export function BookCard ({ book }) {
       <section className='book-info py-2 pr-2 flex flex-col'>
         <h3 className='text-lg font-semibold text-text-primary text-ellipsis line-clamp-5'>{book.title}</h3>
         <p className='text-base font-normal text-text-primary text-ellipsis line-clamp-2'>{book.author}</p>
-        <ul className='flex flex-row flex-wrap gap-2 my-2'>
+        <ul className='flex items-center content-center flex-row flex-wrap gap-2 my-2'>
+          {/* <IoPricetag aria-disabled aria-label='Tag icon' className='min-h-[15px] min-w-[15px] text-text-tertiary' />
+          <p className='text-text-secondary'>Etiquetas</p> */}
           {book.tags.map(tag => (
             <Tag name={tag} key={tag} />
           ))}
@@ -43,8 +49,10 @@ export function BookCard ({ book }) {
           ))}
         </ul>
         <section className='flex flex-row gap-1 mt-auto self-end'>
-          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>🆔 {book.id}</small>
-          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>💿 {book.downloadCount}</small>
+          <AiOutlineFieldNumber aria-disabled aria-label='ID icon' className='min-h-[15px] min-w-[15px] text-text-tertiary' />
+          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>{book.id}</small>
+          <IoArrowDown aria-disabled aria-label='ID icon' className='min-h-[15px] min-w-[15px] text-text-tertiary' />
+          <small className='text-text-secondary text-xs font-mono self-end mt-auto'>{book.downloadCount}</small>
         </section>
       </section>
     </article>
