@@ -51,7 +51,7 @@ body {
   line-height: calc(1em + 1ex);
 }
 svg {
-  color: theme(colors.text-secondary) !important;
+  color: theme(colors.text-secondary);
 }
 
 @layer components {

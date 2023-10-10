@@ -6,7 +6,6 @@ import SearchInput from './form/SearchInput'
 export default function SearchBar ({ getBooks, query, setQuery }) {
   const form = Ariakit.useFormStore({
     setValues: (values) => {
-      console.debug('valuesChanged', values)
       onInputChange(values.query)
       setQuery(values)
     },
@@ -19,7 +18,6 @@ export default function SearchBar ({ getBooks, query, setQuery }) {
     [getBooks])
 
   const onInputChange = (newQuery) => {
-    console.debug('called validate')
     // ? Valida el formulario: si es correcto hace la query
     form.validate().then((isValid) => {
       if (isValid === true) debouncedGetBooks(newQuery)
@@ -43,7 +41,7 @@ export default function SearchBar ({ getBooks, query, setQuery }) {
             title='Search'
           />
         </div>
-        <Ariakit.FormError name={form.names.query} className='text-text-secondary' />
+        <Ariakit.FormError name={form.names.query} className='text-error' />
       </Ariakit.Form>
     </section>
   )

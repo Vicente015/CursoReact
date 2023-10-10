@@ -8,18 +8,19 @@ import SearchBar from './SearchBar'
 
 export default function FilterableBookResults () {
   const [query, setQuery] = useState({ query: '' })
-  const [enabledFilters, setEnabledFilters] = useState(new Map())
   const { books, error: fetchError, getBooks, loading } = useBooks({ query })
   const [filteredBooks, setFilteredBooks] = useState()
-  const { filterBooks, sortBooks } = useFilter({ books, setFilteredBooks, enabledFilters })
+  const [enabledFilters, setEnabledFilters] = useState(new Map())
+  const { filterBooks, sortBooks } = useFilter({ setFilteredBooks })
 
-  // todo: Hacer lógica para el sort
   const onFilterChange = useCallback(({ filter, value }) => {
     !!value && value?.length > 0 ? enabledFilters.set(filter, value) : enabledFilters.delete(filter)
-    console.debug('debug', { filter, value })
-    filterBooks({ enabledFilters, books })
+    filterBooks({ books, enabledFilters })
+  }, [filterBooks, books, enabledFilters])
+
+  const onSortChange = useCallback(({ filter, value }) => {
     sortBooks({ books: filteredBooks ?? books, sort: value })
-  }, [filterBooks, sortBooks, filteredBooks, books])
+  }, [sortBooks, books, filteredBooks])
 
   return (
     <main
@@ -29,7 +30,7 @@ export default function FilterableBookResults () {
         sm:mx-10 md:mx-20 lg:mx-40 xl:mx-60
       '
     >
-      <Filters books={books} onFilterChange={onFilterChange} />
+      <Filters books={books} onFilterChange={onFilterChange} onSortChange={onSortChange} />
       <section className='flex flex-col items-center w-full'>
         <SearchBar query={query} getBooks={getBooks} setQuery={setQuery} />
         <BookResults books={filteredBooks ?? books} fetchError={fetchError} loading={loading} />

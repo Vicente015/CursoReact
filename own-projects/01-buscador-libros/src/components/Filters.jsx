@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import Select from './form/Select'
 import SelectCombobox from './form/SelectCombobox'
 
-export default function Filters ({ books, onFilterChange }) {
+export default function Filters ({ books, onFilterChange, onSortChange }) {
   const languages = useMemo(
     () => [...new Set(books.flatMap(book => book.languages))],
     [books]
@@ -28,8 +28,8 @@ export default function Filters ({ books, onFilterChange }) {
         <Select
           label='Ordenar por'
           items={['id', 'descargas']}
-          defaultValue='Descargas'
-          onChange={onFilterChange}
+          defaultValue='descargas'
+          onChange={onSortChange}
           showValueInside
         />
       </div>

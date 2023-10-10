@@ -1,18 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import searchByInput from '../logic/search'
-// import results from '../mocks/results.json'
 
-/* const sorts = {
-  descargas: (a, b) => a.downloadCount < b.downloadCount,
-  id: (a, b) => a.id > b.id
-} */
-/*
-const filters = {
-  bookshelves: (item, bookshelves) => bookshelves.some((bookshelf) => item.bookshelves.includes(bookshelf)),
-  lang: (item, langs) => item.languages.includes(langs),
-  tags: (item, tags) => tags.some((tag) => item.tags.includes(tag))
-}
- */
 export default function useBooks ({ query }) {
   const [books, setBooks] = useState([])
   const [loading, setLoading] = useState(null)
@@ -36,12 +24,6 @@ export default function useBooks ({ query }) {
       setLoading(false)
     }
   }, [])
-
-  /*   const sortBooks = useCallback(({ sort }) => {
-    console.debug('sort called', sort)
-    const sortedBooks = [...books].sort(sorts[sort])
-    setBooks(sortedBooks)
-  }, [books]) */
 
   return { books, error, getBooks, loading, setBooks }
 }
