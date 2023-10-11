@@ -14,7 +14,14 @@ export default function FilterableBookResults () {
   const { filterBooks, sortBooks } = useFilter({ setFilteredBooks })
 
   const onFilterChange = useCallback(({ filter, value }) => {
-    !!value && value?.length > 0 ? enabledFilters.set(filter, value) : enabledFilters.delete(filter)
+    if (!value || (Array.isArray(value) && value.length === 0) || value === '') {
+      enabledFilters.delete(filter)
+    } else {
+      enabledFilters.set(filter, value)
+    }
+
+    // todo: no funciona bien en conjunto con filtro de años
+    console.debug('awa', enabledFilters, value)
     filterBooks({ books, enabledFilters })
   }, [filterBooks, books, enabledFilters])
 

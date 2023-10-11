@@ -37,7 +37,7 @@ export function BookCard ({ book }) {
       </section>
       <section className='book-info py-2 pr-2 flex flex-col'>
         <h3 className='text-lg font-semibold text-text-primary text-ellipsis line-clamp-5'>{book.title}</h3>
-        <p className='text-base font-normal text-text-primary text-ellipsis line-clamp-2'>{book.author}</p>
+        <p className='text-base font-normal text-text-primary text-ellipsis line-clamp-2'>{book.author.name}</p>
         <ul className='flex items-center content-center flex-row flex-wrap gap-2 my-2'>
           {/* <IoPricetag aria-disabled aria-label='Tag icon' className='min-h-[15px] min-w-[15px] text-text-tertiary' />
           <p className='text-text-secondary'>Etiquetas</p> */}

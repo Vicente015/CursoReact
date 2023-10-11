@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 
 const filters = {
   Etiquetas: (item, value) => value.some((tag) => item.tags.includes(tag)),
+  FechaFin: (item, value) => item.author.death_year <= value,
+  FechaInicio: (item, value) => item.author.birth_year >= value,
   Idiomas: (item, value) => item.languages.includes(value),
   Librería: (item, value) => value.some((bookshelf) => item.bookshelves.includes(bookshelf))
 }

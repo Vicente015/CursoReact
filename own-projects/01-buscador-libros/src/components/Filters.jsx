@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import DateSelect from './form/DateSelect'
 import Select from './form/Select'
 import SelectCombobox from './form/SelectCombobox'
 
@@ -13,6 +14,13 @@ export default function Filters ({ books, onFilterChange, onSortChange }) {
   )
   const bookshelves = useMemo(
     () => [...new Set(books.flatMap(book => book.bookshelves))],
+    [books]
+  )
+  const dates = useMemo(
+    () => [...new Set([
+      ...books.flatMap(book => book.author.birth_year).filter(book => !!book),
+      ...books.flatMap(book => book.author.death_year).filter(book => !!book)
+    ])].sort(),
     [books]
   )
 
@@ -62,10 +70,13 @@ export default function Filters ({ books, onFilterChange, onSortChange }) {
           multiple
         />
       </div>
-      {/* <div className='w-full'>
-            <h3 className='text-lg font-semibold text-text-primary'>Rango de fechas</h3>
-            <DateSelect />
-          </div> */}
+      <div className='w-full'>
+        <h3 className='text-lg font-semibold text-text-primary'>Rango de años del autor</h3>
+        <DateSelect
+          items={dates}
+          onChange={onFilterChange}
+        />
+      </div>
     </aside>
   )
 }

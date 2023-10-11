@@ -1,12 +1,18 @@
 import * as Ariakit from '@ariakit/react'
 import { IoChevronDownOutline } from 'react-icons/io5'
 
-export default function BaseSelect ({ items, label, showValueInside }) {
+// todo: Use this base select in Select component
+export default function BaseSelect ({ defaultValue, items, label, onChange, showValueInside }) {
   const store = Ariakit.useSelectStore({
-    animated: true
+    animated: true,
+    defaultValue,
+    setValue: (value) => {
+      store.setValue(value)
+      onChange({ filter: label, value })
+    }
   })
-
-  const value = store.useState('value')
+  const value = store.useState().value
+  store.useState('value')
   const mounted = store.useState('mounted')
 
   return (
@@ -14,7 +20,7 @@ export default function BaseSelect ({ items, label, showValueInside }) {
       <Ariakit.Select
         store={store}
         className='
-          flex flex-row items-center gap-0 m-0 justify-between px-2 w-fit
+          flex flex-row items-center gap-2 m-0 justify-between px-2 w-fit
           text-text-secondary font-semibold text-lg
           focus-visible:outline-none
         '
