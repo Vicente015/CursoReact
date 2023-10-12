@@ -9,7 +9,7 @@ La carpeta `own-projects` contiene los proyectos propios hechos a partir de los 
 
 ### 🔍📚 [Buscador de libros](https://curso-react-01-buscador-libros.vercel.app/)
 
-Un buscador de libros para el [«Proyecto Gutenberg»](https://es.wikipedia.org/wiki/Proyecto_Gutenberg) usando la API de [«Gutendex»](https://gutendex.com/).
+Un buscador de libros interactivo para el [«Proyecto Gutenberg»](https://es.wikipedia.org/wiki/Proyecto_Gutenberg) usando la API de [«Gutendex»](https://gutendex.com/).
 
 Características:
 * Diseño responsive.
