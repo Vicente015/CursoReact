@@ -91,7 +91,7 @@ export default function Books ({ books }) {
   // ? Only show books with `show = true`
   return (
     books && books.length > 0
-      ? <ListOfBooks books={books.filter((book) => book.show === true)} />
+      ? <ListOfBooks books={books} />
       : <NoBooks />
   )
 }

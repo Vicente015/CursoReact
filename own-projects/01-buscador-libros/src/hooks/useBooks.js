@@ -15,9 +15,7 @@ export default function useBooks ({ query }) {
       setError(null)
       previousQuery.current = query
       const newBooks = await searchByInput({ query })
-      // ? Adds a default field with true
-      const reMapBooks = newBooks.map((book) => ({ ...book, show: true }))
-      setBooks(reMapBooks)
+      setBooks(newBooks)
     } catch (error) {
       setError(error)
     } finally {
