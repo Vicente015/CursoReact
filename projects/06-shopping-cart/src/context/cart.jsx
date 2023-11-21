@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react'
 
-const ActionTypes = {
+const ACTION_TYPES = {
   ADD_TO_CART: 1,
   CLEAR_CART: 3,
   REMOVE_FROM_CART: 2
@@ -8,12 +8,13 @@ const ActionTypes = {
 
 export const CartContext = createContext()
 
-// todo: DEBERES: recuperar estado de localStorage
-const initialState = []
+const initialCartState = JSON.parse(window.localStorage.getItem('cart')) || []
+const updateLocalStorage = (state) => window.localStorage.setItem('cart', JSON.stringify(state))
+
 const reducer = (state, action) => {
   const { payload: actionPayload, type: actionType } = action
   switch (actionType) {
-    case ActionTypes.ADD_TO_CART: {
+    case ACTION_TYPES.ADD_TO_CART: {
       const productInCartIndex = state.findIndex(item => item.id === actionPayload.id)
 
       if (productInCartIndex >= 0) {
@@ -22,37 +23,45 @@ const reducer = (state, action) => {
         newCart[productInCartIndex].quantity += 1
         return newCart
       }
-      return [
+      const newState = [
         ...state,
         { ...actionPayload, quantity: 1 }
       ]
+      updateLocalStorage(newState)
+      return newState
     }
 
-    case ActionTypes.REMOVE_FROM_CART: {
-      return state.filter(item => item.id !== actionPayload.id)
+    case ACTION_TYPES.REMOVE_FROM_CART: {
+      const newState = state.filter(item => item.id !== actionPayload.id)
+      updateLocalStorage(newState)
+      return newState
     }
 
-    case ActionTypes.CLEAR_CART: {
-      return initialState
+    case ACTION_TYPES.CLEAR_CART: {
+      const newState = []
+      updateLocalStorage(newState)
+      return newState
     }
   }
+
+  updateLocalStorage(state)
 }
 
 export function CartProvider ({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialCartState)
 
   const addToCart = (product) => dispatch({
     payload: product,
-    type: ActionTypes.ADD_TO_CART
+    type: ACTION_TYPES.ADD_TO_CART
   })
 
   const removeFromCart = (product) => dispatch({
     payload: product,
-    type: ActionTypes.REMOVE_FROM_CART
+    type: ACTION_TYPES.REMOVE_FROM_CART
   })
 
   const clearCart = () => dispatch({
-    type: ActionTypes.CLEAR_CART
+    type: ACTION_TYPES.CLEAR_CART
   })
 
   return (
