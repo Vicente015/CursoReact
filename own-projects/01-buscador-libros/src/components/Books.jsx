@@ -64,9 +64,10 @@ export function ListOfBooks ({ books }) {
     <ul
       className='
         grid gap-4 mt-8
-        sm:grid-cols-[repeat(1,_minmax(200px,_1fr))]
+        sm:grid-cols-[repeat(2,_minmax(200px,_1fr))]
         md:grid-cols-[repeat(2,_minmax(200px,_1fr))]
-        lg:grid-cols-[repeat(4,_minmax(200px,_1fr))]
+        lg:grid-cols-[repeat(3,_minmax(200px,_1fr))]
+        xl:grid-cols-[repeat(4,_minmax(200px,_1fr))]
       '
       style={{
         gridAutoRows: 'minmax(0, 1fr)' // ? hace que todas las columnas tengan mismo tamaño

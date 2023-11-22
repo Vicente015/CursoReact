@@ -32,7 +32,7 @@ export default function FilterableBookResults () {
   return (
     <main
       className='
-        flex flex-row gap-4
+        flex flex-row gap-4 md:flex-nowrap flex-wrap
         mx-5 mt-4 pb-10 p-1
         sm:mx-10 md:mx-20 lg:mx-40 xl:mx-60
       '

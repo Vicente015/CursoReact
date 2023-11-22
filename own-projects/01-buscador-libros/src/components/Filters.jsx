@@ -28,7 +28,8 @@ export default function Filters ({ books, onFilterChange, onSortChange }) {
     <aside
       className='
         flex flex-col items-start justify-start flex-nowrap
-        gap-4 w-full max-w-[16rem]
+        gap-4 w-full min-w-[16rem] md:max-w-[16rem]
+        child:child:mb-1
       '
     >
       <div className='w-full'>

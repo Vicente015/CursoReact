@@ -2,7 +2,7 @@
 const API_URL = 'https://gutendex.com/books'
 
 const mapBooks = (books) => books.map((book) => ({
-  author: book.authors[0],
+  author: book.authors[0] || 'Desconocido',
   bookshelves: book.bookshelves,
   coverImage: book.formats['image/jpeg'],
   downloadCount: book.download_count,

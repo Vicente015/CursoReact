@@ -3,6 +3,7 @@
     "imdb"
   ],
   "conventionalCommits.scopes": [
-    "06"
+    "06",
+    "own/01"
   ]
 }
