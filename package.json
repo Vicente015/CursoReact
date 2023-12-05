@@ -33,7 +33,6 @@
       "plugin:unicorn/recommended"
     ],
     "rules": {
-      "unicorn/consistent-function-scoping": "off",
       "unicorn/filename-case": "off",
       "unicorn/no-null": "off",
       "react/react-in-jsx-scope": "off",
