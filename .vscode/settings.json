@@ -5,6 +5,7 @@
   ],
   "conventionalCommits.scopes": [
     "06",
-    "own/01"
+    "own/01",
+    "07"
   ]
 }
