@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
+import { Route } from './components/Route.jsx'
+import { Router } from './components/Router.jsx'
 import NotFoundPage from './pages/404.jsx'
-import { Route } from './Route.jsx'
-import Router from './Router.jsx'
 
 const AboutPage = lazy(() => import('./pages/About.jsx'))
 const HomePage = lazy(() => import('./pages/Home.jsx'))

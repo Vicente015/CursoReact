@@ -34,6 +34,7 @@
     ],
     "rules": {
       "unicorn/filename-case": "off",
+      "unicorn/prefer-spread": "off",
       "unicorn/no-null": "off",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off"
