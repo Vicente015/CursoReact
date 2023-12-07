@@ -1,11 +1,4 @@
 {
-  "cSpell.words": [
-    "imdb",
-    "PUSHSTATE"
-  ],
-  "conventionalCommits.scopes": [
-    "06",
-    "own/01",
-    "07"
-  ]
+  "cSpell.words": ["imdb", "PUSHSTATE"],
+  "conventionalCommits.scopes": ["06", "own/01", "07", "own/02"]
 }

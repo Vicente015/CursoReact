@@ -1,20 +1,21 @@
 import { type ChangeEvent, useState } from 'react'
+import { useTasksDispatch } from '../context/TasksContext'
 
-interface Props {
-  onTaskAdd: (text: string) => void
-}
-
-const NewTask: React.FC<Props> = ({ onTaskAdd }) => {
+const NewTask: React.FC = () => {
   const [text, setText] = useState('')
+  const dispatch = useTasksDispatch()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setText(event.target.value)
+    setText(event.target.value.trim())
   }
 
   // todo: está deprecado, mirar alternativa
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
-      onTaskAdd(text)
+      dispatch({
+        payload: { text },
+        type: 'add'
+      })
       setText('')
     }
   }

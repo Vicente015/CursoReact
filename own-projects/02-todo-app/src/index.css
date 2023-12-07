@@ -149,6 +149,8 @@ input:focus {
 }
 
 .icons {
+  display: flex;
+  gap: .4em;
   margin-left: auto;
 }
 
