@@ -9,7 +9,6 @@ const NewTask: React.FC = () => {
     setText(event.target.value.trim())
   }
 
-  // todo: está deprecado, mirar alternativa
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       dispatch({
