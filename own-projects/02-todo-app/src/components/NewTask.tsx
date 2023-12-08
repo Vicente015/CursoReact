@@ -10,7 +10,7 @@ const NewTask: React.FC = () => {
   }
 
   // todo: está deprecado, mirar alternativa
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       dispatch({
         payload: { text },
@@ -29,7 +29,7 @@ const NewTask: React.FC = () => {
           id="new_task"
           value={text}
           onChange={handleChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           placeholder="Escriba una tarea nueva"
         />
       </div>

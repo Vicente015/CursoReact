@@ -46,6 +46,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding: 1em;
 }
 
 h1 {
@@ -124,23 +125,32 @@ input:focus {
   background-color: var(--gray-100);
   padding: 1em;
   display: flex;
+  gap: 1em;
   align-items: center;
   box-shadow: 0 0 5px var(--gray-400);
 
-  & input {
+  & .checkbox {
     margin: 0;
     margin-left: .6em;
-    margin-right: 2em;
     transform: scale(2);
   }
 
-  &:focus-within {
-    outline: 2px solid var(--outline-color);
+  & .title-edit {
+    padding: .4em;
+    font-size: 1em;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 10px;
+    background-color: var(--gray-300);
+
+    &:focus-visible {
+      outline: 2px solid var(--outline-color);
+    }
   }
 }
 
 .disabled-task {
-  background-color: var(--gray-300);
+  background-color: var(--gray-200);
 
   & p,
   h4 {
