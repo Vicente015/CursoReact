@@ -164,6 +164,18 @@ input:focus {
   margin-left: auto;
 }
 
+.show {
+  display: block;
+}
+
 .hidden {
   display: none;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 20;
+  background-color: var(--gray-300);
+  padding: 1em;
+  border-radius: var(--radius);
 }

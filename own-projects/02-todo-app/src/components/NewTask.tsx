@@ -6,13 +6,13 @@ const NewTask: React.FC = () => {
   const dispatch = useTasksDispatch()
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setText(event.target.value.trim())
+    setText(event.target.value)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && Boolean(text.trim())) {
       dispatch({
-        payload: { text },
+        payload: { title: text.trim() },
         type: 'add'
       })
       setText('')

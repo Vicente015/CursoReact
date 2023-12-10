@@ -8,7 +8,7 @@ export interface TaskType {
 }
 
 export type ActionType =
-  | { type: 'add', payload: { text: string } }
+  | { type: 'add', payload: { title: string } }
   | { type: 'edit', payload: Omit<Partial<TaskType>, 'id'> & Pick<TaskType, 'id'> } // makes every property optional except Id
   | { type: 'delete', payload: { id: TaskType['id'] } }
 
@@ -18,11 +18,11 @@ const initialTasks = [
   {
     completed: false,
     id: genId(),
-    title: 'owo'
+    title: 'Initial task'
   }
 ]
 
-export const TasksContext = createContext<typeof initialTasks>(null!)
+export const TasksContext = createContext<TaskType[]>(null!)
 export const TasksDispatchContext = createContext<React.Dispatch<ActionType>>(null!)
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -51,7 +51,7 @@ export function useTasksDispatch () {
 const tasksReducer: React.Reducer<typeof initialTasks, ActionType> = (tasks, action) => {
   switch (action.type) {
     case 'add': {
-      return [{ completed: false, id: genId(), title: action.payload.text }, ...tasks]
+      return [{ completed: false, id: genId(), title: action.payload.title }, ...tasks]
     }
 
     case 'edit': {
