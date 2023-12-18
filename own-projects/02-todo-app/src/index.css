@@ -133,6 +133,7 @@ input:focus {
     margin: 0;
     margin-left: .6em;
     transform: scale(2);
+    cursor: pointer;
   }
 
   & .title-edit {

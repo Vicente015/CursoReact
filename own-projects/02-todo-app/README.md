@@ -1,3 +1,21 @@
+## Crear un TodoMVC con TypeScript
+
+- [x] Inicializar proyecto con Vite
+- [x] Añadir linter para TypeScript + React
+- [?] Añadir estilos del TodoMVC
+- [x] Listar todos los TODOs
+- [x] Poder borrar un TODO
+- [x] Marcar TODO como completado
+- [ ] Añadir forma de filtrar TODOs (Footer)
+- [ ] Mostrar número de TODOs pendientes (Footer)
+- [ ] Añadir forma de borrar todos los TODOs completados
+- [x] Crear Header con input (Header)
+- [x] Crear un TODO (Header)
+- [ ] Poder editar el texto de un TODO (Doble click)
+- [ ] Añadir animaciones con AutoAnimate
+- [x] Pasar a Reducer
+- [ ] Sincronizar con el backend
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

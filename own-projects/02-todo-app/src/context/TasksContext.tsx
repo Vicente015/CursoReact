@@ -14,7 +14,7 @@ export type ActionType =
 
 const genId = () => crypto.randomUUID()
 
-const initialTasks = [
+const initialTasks: TaskType[] = [
   {
     completed: false,
     id: genId(),
@@ -48,7 +48,7 @@ export function useTasksDispatch () {
   return useContext(TasksDispatchContext)
 }
 
-const tasksReducer: React.Reducer<typeof initialTasks, ActionType> = (tasks, action) => {
+const tasksReducer: React.Reducer<TaskType[], ActionType> = (tasks, action) => {
   switch (action.type) {
     case 'add': {
       return [{ completed: false, id: genId(), title: action.payload.title }, ...tasks]

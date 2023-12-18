@@ -51,8 +51,10 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
 
   // todo: Confirmación al borrar
 
-  const [referenceElement, setRefenceElement] = useState()
-  const [popperElement, setPopperElement] = useState()
+  type usePopperParameters = Parameters<typeof usePopper>
+
+  const [referenceElement, setReferenceElement] = useState<usePopperParameters[0]>()
+  const [popperElement, setPopperElement] = useState<usePopperParameters[1]>()
   const [showTooltip, setShowTooltip] = useState(false)
   const { attributes, styles, update: popperUpdate } = usePopper(referenceElement, popperElement, {
     placement: 'top'
@@ -60,10 +62,8 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
 
   const tooltipShow = () => {
     setShowTooltip(!showTooltip)
-    if (popperUpdate !== null) popperUpdate()
+    if (popperUpdate !== null) void popperUpdate()
   }
-
-  // TODO: Dejar de usar FontAwesome
 
   return (
   <>
@@ -84,7 +84,7 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
             <div className="icons">
               <i title="Editar tarea" className="fa-solid fa-pen-to-square" onClick={enableEditing}></i>
               <i title="Borrar tarea" className="fa-solid fa-trash" onClick={handleDestroy}></i>
-              <i title='Opciones' className='fa-solid fa-bars' ref={setRefenceElement} onClick={tooltipShow}></i>
+              <i title='Opciones' className='fa-solid fa-bars' ref={setReferenceElement} onClick={tooltipShow}></i>
             </div>
           </>
           ) }
