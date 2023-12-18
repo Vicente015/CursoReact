@@ -5,8 +5,9 @@ import { TasksProvider } from './context/TasksContext'
 const App: React.FC = () => {
   // todo: Contador de tareas completadas
   // todo: Filtros Todas / Completadas / No completadas
-  // todo: sacar tipos a un fichero aparte
-  // todo: Sacar lógico del dispatch a funciones aparte ??
+  // done: Sacar tipos a un fichero aparte
+  // done: Soportar colores con la paleta de GNOME
+  // todo: Soportar Dark Mode
   return (
     <TasksProvider>
       <main>
@@ -14,7 +15,7 @@ const App: React.FC = () => {
           <h1>📑 Lista de tareas</h1>
         </section>
 
-        <NewTask/>
+        <NewTask />
         <TasksList/>
       </main>
     </TasksProvider>

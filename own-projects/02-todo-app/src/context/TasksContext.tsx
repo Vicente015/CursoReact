@@ -1,21 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createContext, type PropsWithChildren, useContext, useReducer } from 'react'
-
-export interface TaskType {
-  id: ReturnType<typeof genId>
-  title: string
-  completed: boolean
-}
-
-export type ActionType =
-  | { type: 'add', payload: { title: string } }
-  | { type: 'edit', payload: Omit<Partial<TaskType>, 'id'> & Pick<TaskType, 'id'> } // makes every property optional except Id
-  | { type: 'delete', payload: { id: TaskType['id'] } }
-
-const genId = () => crypto.randomUUID()
+import { type ActionType, type TaskType } from '../types/Task'
+import { genId } from '../utils/genId'
 
 const initialTasks: TaskType[] = [
   {
+    color: 'brown',
     completed: false,
     id: genId(),
     title: 'Initial task'
@@ -27,7 +17,7 @@ export const TasksDispatchContext = createContext<React.Dispatch<ActionType>>(nu
 
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [tasks, dispatch] = useReducer(
-    tasksReducer,
+    reducer,
     initialTasks
   )
 
@@ -48,10 +38,10 @@ export function useTasksDispatch () {
   return useContext(TasksDispatchContext)
 }
 
-const tasksReducer: React.Reducer<TaskType[], ActionType> = (tasks, action) => {
+const reducer: React.Reducer<TaskType[], ActionType> = (tasks, action) => {
   switch (action.type) {
     case 'add': {
-      return [{ completed: false, id: genId(), title: action.payload.title }, ...tasks]
+      return [{ color: 'light', completed: false, id: genId(), title: action.payload.title }, ...tasks]
     }
 
     case 'edit': {

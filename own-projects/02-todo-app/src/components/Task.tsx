@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { usePopper } from 'react-popper'
-import { type TaskType, useTasksDispatch } from '../context/TasksContext'
+import { useTasksDispatch } from '../context/TasksContext'
+import { type TaskType } from '../types/Task'
+import { colors } from '../utils/Constants'
 import { Portal } from '../utils/Portal'
 
-const Task: React.FC<TaskType> = ({ completed, id, title }) => {
+const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const dispatch = useTasksDispatch()
   const [isEditing, setEditing] = useState(false)
   const [text, setText] = useState(title)
@@ -44,6 +46,14 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
     })
   }
 
+  const onColorChange: React.MouseEventHandler<HTMLLIElement> = (event) => {
+    const newColor = event.target as HTMLElement
+    dispatch({
+      payload: { color: newColor.id, id },
+      type: 'edit'
+    })
+  }
+
   const enableEditing = () => {
     setText(title)
     setEditing(true)
@@ -67,7 +77,7 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
 
   return (
   <>
-    <li className={`task ${completed ? 'disabled-task' : ''}`} id={id.toString()} >
+    <li className={`task ${completed ? 'disabled-task' : ''}`} id={id.toString()} style={{ backgroundColor: `var(--gnome-${color}2)` }}>
       {isEditing
         ? (
           <>
@@ -93,7 +103,24 @@ const Task: React.FC<TaskType> = ({ completed, id, title }) => {
     <Portal>
       <div className={`tooltip ${showTooltip ? 'show' : 'hidden'}`} ref={setPopperElement} style={styles.popper} {...attributes.popper}>
           <div data-popper-arrow></div>
-        <p>Esto es una prueba</p>
+          <ul style={{ display: 'grid', gap: '.2em', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+            {colors.map((color) => {
+              return (
+                <li key={color}
+                  id={color}
+                  onClick={onColorChange}
+                  style={{
+                    backgroundColor: `var(--gnome-${color}2)`,
+                    borderRadius: '100%',
+                    cursor: 'pointer',
+                    listStyle: 'none',
+                    padding: '.8em'
+                  }}
+                ></li>
+              )
+            })
+            }
+          </ul>
       </div>
     </Portal>
   </>

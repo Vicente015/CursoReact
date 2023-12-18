@@ -109,6 +109,9 @@ importers:
 
   own-projects/02-todo-app:
     dependencies:
+      '@karibash/pixel-units':
+        specifier: ^2.3.0
+        version: 2.3.0
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
@@ -1269,6 +1272,12 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+
+  /@karibash/pixel-units@2.3.0:
+    resolution: {integrity: sha512-+IgmqYmmz2WZzJ1MpCnOMV2C58muLQX2VUy0pi/XGPBA5vMm6xN/9HNOykyLe7r/bvvqoQULC4frKeq+ypKVRA==}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4737,6 +4746,10 @@ packages:
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
+
+  /tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: false
 
   /tsutils@3.21.0(typescript@5.3.2):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
