@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { usePopper } from 'react-popper'
 import { useTasksDispatch } from '../context/TasksContext'
-import { type TaskType } from '../types/Task'
+import { type ColorsUnion, type TaskType } from '../types/Task'
 import { colors } from '../utils/Constants'
 import { Portal } from '../utils/Portal'
 
@@ -49,7 +49,7 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const onColorChange: React.MouseEventHandler<HTMLLIElement> = (event) => {
     const newColor = event.target as HTMLElement
     dispatch({
-      payload: { color: newColor.id, id },
+      payload: { color: newColor.id as ColorsUnion, id },
       type: 'edit'
     })
   }

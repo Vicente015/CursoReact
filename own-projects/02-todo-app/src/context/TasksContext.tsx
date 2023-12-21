@@ -5,7 +5,7 @@ import { genId } from '../utils/genId'
 
 const initialTasks: TaskType[] = [
   {
-    color: 'brown',
+    color: 'light',
     completed: false,
     id: genId(),
     title: 'Initial task'
@@ -41,7 +41,8 @@ export function useTasksDispatch () {
 const reducer: React.Reducer<TaskType[], ActionType> = (tasks, action) => {
   switch (action.type) {
     case 'add': {
-      return [{ color: 'light', completed: false, id: genId(), title: action.payload.title }, ...tasks]
+      const newTask: TaskType = { color: 'light', completed: false, id: genId(), title: action.payload.title }
+      return [newTask, ...tasks]
     }
 
     case 'edit': {

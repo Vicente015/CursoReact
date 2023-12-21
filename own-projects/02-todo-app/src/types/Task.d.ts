@@ -1,11 +1,13 @@
 import { type colors } from '../utils/Constants'
 import { type genId } from '../utils/genId'
 
+export type ColorsUnion = typeof colors[number]
+
 export interface TaskType {
   id: ReturnType<typeof genId>
   title: string
   completed: boolean
-  color: typeof colors[number]
+  color: ColorsUnion
 }
 
 export type ActionType =
