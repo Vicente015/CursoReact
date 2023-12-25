@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@karibash/pixel-units": "^2.3.0",
     "@popperjs/core": "^2.11.8",
+    "case-anything": "^2.1.13",
+    "lucide-react": "^0.302.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-popper": "^2.3.0"

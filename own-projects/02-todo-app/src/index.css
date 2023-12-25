@@ -56,7 +56,7 @@
   --gnome-brown4: rgb(134, 94, 60);
   --gnome-brown5: rgb(99, 69, 44);
   --gnome-light1: #ffffff;
-  --gnome-light2: #f6f5f4;
+  --gnome-light2: var(--gray-100);
   --gnome-light3: #deddda;
   --gnome-light4: #c0bfbc;
   --gnome-light5: #9a9996;
@@ -84,17 +84,45 @@ body {
 
 body {
   background-color: var(--gray-200);
-  max-width: 70ch;
   margin: auto;
   line-height: 1.75;
   font-size: 1.25em;
 }
 
+header {
+  padding: 1rem;
+  background-color: var(--gnome-light1);
+  box-shadow: 0 0 15px var(--gray-300);
+  width: 100%;
+
+  & .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 819px;
+    margin: auto;
+
+    & h3 {
+      color: var(--gray-800);
+      margin: 0;
+      font-weight: 800;
+    }
+
+    & p {
+      color: var(--gray-600);
+      margin: 0;
+      line-height: 1;
+      text-align: center;
+    }
+  }
+}
+
 main {
-  margin-top: 1em;
+  max-width: 70ch;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: .8rem;
   padding: 1em;
 }
 
@@ -145,9 +173,9 @@ h1 {
   color: var(--gray-500);
 }
 
-i {
+.lucide {
   cursor: pointer;
-  color: var(--gray-800);
+  color: var(--gray-800) !important;
 }
 
 i:hover {
@@ -229,4 +257,34 @@ input:focus {
   padding: 1em;
   border-radius: var(--radius);
   box-shadow: 0 0 10px var(--gnome-dark1);
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: .5em;
+
+  & h4 {
+    display: flex;
+    align-items: center;
+    color: var(--gray-800)
+  }
+
+  & button {
+    border: none;
+    border-radius: var(--radius);
+    padding: .5em .8em;
+    background-color: var(--gray-100);
+    cursor: pointer;
+    box-shadow: 0 0 4px var(--gray-300);
+
+    &:hover {
+      background-color: var(--gray-250);
+    }
+
+    &.active {
+      background-color: var(--gray-400);
+    }
+  }
 }

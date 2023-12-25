@@ -14,3 +14,4 @@ export type ActionType =
   | { type: 'add', payload: { title: string } }
   | { type: 'edit', payload: Omit<Partial<TaskType>, 'id'> & Pick<TaskType, 'id'> } // makes every property optional except Id
   | { type: 'delete', payload: { id: TaskType['id'] } }
+  | { type: 'remove-completed', payload?: undefined }

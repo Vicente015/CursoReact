@@ -1,3 +1,4 @@
+import { EditIcon, MenuIcon, TrashIcon, XCircleIcon } from 'lucide-react'
 import { useState } from 'react'
 import { usePopper } from 'react-popper'
 import { useTasksDispatch } from '../context/TasksContext'
@@ -83,18 +84,18 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
           <>
             <input type="text" className='title-edit' name="title-edit" id="title-edit" value={text} onChange={handleEdit} onKeyDown={handleKeyDown} />
             <div className="icons">
-              <i title='Cancelar (Escape)' className='fa-solid fa-xmark' onClick={cancelEditing}></i>
+              <XCircleIcon className='fa-solid fa-xmark' onClick={cancelEditing}/>
             </div>
           </>
           )
         : (
           <>
-            <input className='checkbox' type="checkbox" name="check" id="check" onChange={handleCheck}/>
+            <input className='checkbox' type="checkbox" name="check" id="check" value={`${completed}`} checked={completed} onChange={handleCheck}/>
             <h4>{title}</h4>
-            <div className="icons">
-              <i title="Editar tarea" className="fa-solid fa-pen-to-square" onClick={enableEditing}></i>
-              <i title="Borrar tarea" className="fa-solid fa-trash" onClick={handleDestroy}></i>
-              <i title='Opciones' className='fa-solid fa-bars' ref={setReferenceElement} onClick={tooltipShow}></i>
+              <div className="icons">
+                <EditIcon className="fa-solid fa-pen-to-square" onClick={enableEditing} />
+                <TrashIcon className="fa-solid fa-trash" onClick={handleDestroy} />
+                <MenuIcon className='fa-solid fa-bars' ref={setReferenceElement} onClick={tooltipShow}/>
             </div>
           </>
           ) }
@@ -116,7 +117,7 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
                     listStyle: 'none',
                     padding: '.8em'
                   }}
-                ></li>
+                />
               )
             })
             }

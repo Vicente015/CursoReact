@@ -58,5 +58,9 @@ const reducer: React.Reducer<TaskType[], ActionType> = (tasks, action) => {
     case 'delete': {
       return tasks.filter((task) => task.id !== action.payload.id)
     }
+
+    case 'remove-completed': {
+      return tasks.filter((task) => !task.completed)
+    }
   }
 }

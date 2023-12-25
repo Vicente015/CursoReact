@@ -1,3 +1,4 @@
+import { PencilIcon } from 'lucide-react'
 import { type ChangeEvent, useState } from 'react'
 import { useTasksDispatch } from '../context/TasksContext'
 
@@ -5,11 +6,11 @@ const NewTask: React.FC = () => {
   const [text, setText] = useState('')
   const dispatch = useTasksDispatch()
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value)
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && Boolean(text.trim())) {
       dispatch({
         payload: { title: text.trim() },
@@ -32,7 +33,7 @@ const NewTask: React.FC = () => {
           placeholder="Escriba una tarea nueva"
         />
       </div>
-      <i className="fa-solid fa-pencil"></i>
+      <PencilIcon/>
     </section>
   )
 }

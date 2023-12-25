@@ -1,12 +1,18 @@
 import { useTasks } from '../context/TasksContext'
+import { type useFilters } from '../hooks/useFilters'
 import { Task } from './Task'
 
-const TasksList: React.FC = () => {
+interface Props {
+  filterTasks: ReturnType<typeof useFilters>['filterTasks']
+}
+
+const TasksList: React.FC<Props> = ({ filterTasks }) => {
   const tasks = useTasks()
+  const filteredTasks = filterTasks(tasks)
 
   return (
     <ul className="tasks-list">
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <Task key={task.id} {...task}></Task>
       ))}
     </ul>
