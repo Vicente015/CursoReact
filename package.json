@@ -1,0 +1,8 @@
+{
+  "pnpm": {
+    "overrides": {
+      "@types/react": "latest",
+      "@types/react-dom": "latest"
+    }
+  }
+}
