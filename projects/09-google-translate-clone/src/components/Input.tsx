@@ -1,14 +1,28 @@
-import { useStore } from '../hooks/useStore'
+import { type useStore } from '../hooks/useStore'
 
-const Input: React.FC = () => {
-  const { setFromText } = useStore()
+type TypesFromStore = ReturnType<typeof useStore>
+interface Props {
+  onChange: TypesFromStore['setFromText']
+  value: TypesFromStore['fromText']
+  placeholder: string
+}
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setFromText(event.target.value)
+const Input: React.FC<Props> = ({ onChange, placeholder, value }) => {
+  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    onChange(event.target.value)
   }
 
   return (
-    <input placeholder='Escriba el texto a traducir' onChange={handleChange}></input>
+    <textarea
+      className='
+        p-2 my-2 w-full resize-none
+        bg-bg-secondary text-text-secondary rounded-md shadow-sm
+      '
+      rows={6}
+      placeholder={placeholder}
+      onChange={handleChange}
+      value={value}
+    />
   )
 }
 

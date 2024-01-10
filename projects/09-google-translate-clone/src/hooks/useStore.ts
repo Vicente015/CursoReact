@@ -65,7 +65,7 @@ export function useStore () {
     })
   }
 
-  const setFromLanguages = (language: FromLanguage) => {
+  const setFromLanguage = (language: FromLanguage) => {
     dispatch({
       payload: language,
       type: 'SET_FROM_LANGUAGE'
@@ -96,7 +96,7 @@ export function useStore () {
   return {
     ...state,
     interchangeLanguages,
-    setFromLanguages,
+    setFromLanguage,
     setFromText,
     setResult,
     setToLanguage

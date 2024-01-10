@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ariakit/react": "^0.3.12",
+    "just-debounce-it": "^3.2.0",
     "lingva-scraper": "^1.1.0",
     "lucide-react": "^0.302.0",
     "match-sorter": "^6.3.1",

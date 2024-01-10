@@ -42,9 +42,11 @@ const SelectCombobox = <T extends string>({ defaultValue, items, label, multiple
   }, [deferredSelectValue])
 
   const matches = useMemo(() => {
-    return matchSorter(items, deferredValue, {
+    const results = matchSorter(items, deferredValue, {
       baseSort: (a, b) => (a.index < b.index ? -1 : 1)
     })
+    results.length = 40
+    return results
   }, [deferredValue, items])
 
   return (
