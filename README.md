@@ -25,7 +25,7 @@ Características:
 </td></tr>
 <tr><td width="400px" valign="top">
 
-### 📑 [Lista de Tareas](https://curso-react-01-buscador-libros.vercel.app/)
+### 📑 [Lista de Tareas](https://todo-app-vicente015.vercel.app/)
 
 Una lista de tareas con una interfaz simple y acogedora con filtros y colores.
 
