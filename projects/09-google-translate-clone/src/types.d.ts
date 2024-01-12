@@ -4,19 +4,19 @@ const auto = 'auto' as const
 
 export type Language = Exclude<LangCode, 'auto'>
 export type AutoLanguage = typeof auto
-export type FromLanguage = Language | AutoLanguage
+export type SourceLanguage = Language | AutoLanguage
 
 export interface State {
-  fromLanguage: FromLanguage
-  toLanguage: Language
-  fromText: string
+  sourceLanguage: SourceLanguage
+  targetLanguage: Language
+  sourceText: string
   result: string
   loading: boolean
 }
 
 export type Action =
-  | { type: 'SET_FROM_LANGUAGE', payload: FromLanguage }
+  | { type: 'SET_SOURCE_LANGUAGE', payload: SourceLanguage }
   | { type: 'INTERCHANGE_LANGUAGES' }
-  | { type: 'SET_TO_LANGUAGE', payload: Language }
-  | { type: 'SET_FROM_TEXT', payload: string }
+  | { type: 'SET_TARGET_LANGUAGE', payload: Language }
+  | { type: 'SET_SOURCE_TEXT', payload: string }
   | { type: 'SET_RESULT', payload: string }

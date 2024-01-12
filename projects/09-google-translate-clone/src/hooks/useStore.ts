@@ -1,47 +1,47 @@
 import { useReducer } from 'react'
-import { type Action, type FromLanguage, type Language, type State } from '../types'
+import { type Action, type Language, type SourceLanguage, type State } from '../types'
 
 const initialState: State = {
-  fromLanguage: 'auto',
-  fromText: '',
   loading: true,
   result: '',
-  toLanguage: 'en'
+  sourceLanguage: 'auto',
+  sourceText: '',
+  targetLanguage: 'en'
 }
 
 export const reducer: React.Reducer<State, Action> = (state, action) => {
   const { type } = action
 
   if (type === 'INTERCHANGE_LANGUAGES') {
-    if (state.fromLanguage !== 'auto') {
+    if (state.sourceLanguage !== 'auto') {
       return {
         ...state,
-        fromLanguage: state.toLanguage,
-        toLanguage: state.fromLanguage
+        sourceLanguage: state.targetLanguage,
+        targetLanguage: state.sourceLanguage
       }
     }
   }
 
-  if (type === 'SET_FROM_LANGUAGE') {
+  if (type === 'SET_SOURCE_LANGUAGE') {
     return {
       ...state,
-      fromLanguage: action.payload
+      sourceLanguage: action.payload
     }
   }
 
-  if (type === 'SET_TO_LANGUAGE') {
+  if (type === 'SET_TARGET_LANGUAGE') {
     return {
       ...state,
-      toLanguage: action.payload
+      targetLanguage: action.payload
     }
   }
 
-  if (type === 'SET_FROM_TEXT') {
+  if (type === 'SET_SOURCE_TEXT') {
     return {
       ...state,
-      fromText: action.payload,
       loading: true,
-      result: ''
+      result: '',
+      sourceText: action.payload
     }
   }
 
@@ -65,24 +65,24 @@ export function useStore () {
     })
   }
 
-  const setFromLanguage = (language: FromLanguage) => {
+  const setSourceLanguage = (language: SourceLanguage) => {
     dispatch({
       payload: language,
-      type: 'SET_FROM_LANGUAGE'
+      type: 'SET_SOURCE_LANGUAGE'
     })
   }
 
-  const setToLanguage = (language: Language) => {
+  const setTargetLanguage = (language: Language) => {
     dispatch({
       payload: language,
-      type: 'SET_TO_LANGUAGE'
+      type: 'SET_TARGET_LANGUAGE'
     })
   }
 
-  const setFromText = (text: string) => {
+  const setSourceText = (text: string) => {
     dispatch({
       payload: text,
-      type: 'SET_FROM_TEXT'
+      type: 'SET_SOURCE_TEXT'
     })
   }
 
@@ -96,9 +96,9 @@ export function useStore () {
   return {
     ...state,
     interchangeLanguages,
-    setFromLanguage,
-    setFromText,
     setResult,
-    setToLanguage
+    setSourceLanguage,
+    setSourceText,
+    setTargetLanguage
   }
 }

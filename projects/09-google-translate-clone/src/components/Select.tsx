@@ -3,12 +3,12 @@ import * as Ariakit from '@ariakit/react'
 import { ChevronDownIcon } from 'lucide-react'
 import { matchSorter } from 'match-sorter'
 import { useDeferredValue, useMemo } from 'react'
-import { type FromLanguage } from '../types'
+import { type SourceLanguage } from '../types'
 
 interface Props<T> {
   value: T
   defaultValue: T
-  items: Array<[FromLanguage, string]>
+  items: Array<[SourceLanguage, string]>
   label: string
   onChange: (value: T) => void
   multiple?: boolean
@@ -23,7 +23,7 @@ const SelectCombobox = <T extends string>({ defaultValue, items, label, multiple
     animated: true,
     combobox,
     defaultValue,
-    setValue: (value) => {
+    setValue: (value: T) => {
       onChange(value)
       store.setValue(value)
     },

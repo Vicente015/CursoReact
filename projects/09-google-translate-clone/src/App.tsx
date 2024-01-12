@@ -1,31 +1,30 @@
 import './App.css'
 import debounce from 'just-debounce-it'
-import { getTranslationText } from 'lingva-scraper'
 import { useCallback } from 'react'
 import Input from './components/Input'
 import LanguageSelector from './components/LanguageSelector'
-import useScraper from './hooks/useScraper'
 import { useStore } from './hooks/useStore'
+import useTranslateAPI from './hooks/useTranslateAPI'
 
 function App () {
   const {
-    fromLanguage,
-    fromText,
     result,
-    setFromLanguage,
-    setFromText,
     setResult,
-    setToLanguage,
-    toLanguage
+    setSourceLanguage,
+    setSourceText,
+    setTargetLanguage,
+    sourceLanguage,
+    sourceText: fromText,
+    targetLanguage: toLanguage
   } = useStore()
-  const { getTranslation } = useScraper({ query: fromText, setResult, source: fromLanguage, target: toLanguage })
+  const { getTranslation } = useTranslateAPI({ query: fromText, setResult, source: sourceLanguage, target: toLanguage })
 
   const debouncedGetTranslation = useCallback(
-    debounce(async (query: string) => { await getTranslation({ query }) }, 1000),
+    debounce(async (query: string) => { await getTranslation({ query }) }, 1_500),
     [getTranslation])
 
   const onSourceChange = (text: string) => {
-    setFromText(text)
+    setSourceText(text)
     debouncedGetTranslation(text)
   }
 
@@ -44,25 +43,26 @@ function App () {
       >
         <section className='source'>
           <LanguageSelector
-            type='from'
-            value={fromLanguage}
-            defaultValue={fromLanguage}
-            onChange={setFromLanguage}
+            type='source'
+            value={sourceLanguage}
+            defaultValue={sourceLanguage}
+            onChange={setSourceLanguage}
           />
           <Input
             value={fromText}
-            onChange={onSourceChange}
+            handleChange={onSourceChange}
             placeholder='Escriba el texto a traducir'
           />
         </section>
         <section className="target">
           <LanguageSelector
-            type='to'
+            type='target'
             value={toLanguage}
             defaultValue={toLanguage}
-            onChange={setToLanguage}
+            onChange={setTargetLanguage}
           />
           <Input
+            disabled={true}
             value={result}
             placeholder=''
           />

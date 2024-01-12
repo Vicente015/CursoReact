@@ -1,15 +1,16 @@
+import { type HTMLProps } from 'react'
 import { type useStore } from '../hooks/useStore'
 
 type TypesFromStore = ReturnType<typeof useStore>
 interface Props {
-  onChange: TypesFromStore['setFromText']
-  value: TypesFromStore['fromText']
+  handleChange?: TypesFromStore['setSourceText']
+  value: TypesFromStore['sourceText']
   placeholder: string
 }
 
-const Input: React.FC<Props> = ({ onChange, placeholder, value }) => {
-  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    onChange(event.target.value)
+const Input: React.FC<Props & HTMLProps<HTMLTextAreaElement>> = ({ handleChange, placeholder, value, ...props }) => {
+  const handleTextAreaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    if (handleChange !== undefined) handleChange(event.target.value)
   }
 
   return (
@@ -20,8 +21,9 @@ const Input: React.FC<Props> = ({ onChange, placeholder, value }) => {
       '
       rows={6}
       placeholder={placeholder}
-      onChange={handleChange}
+      onChange={handleTextAreaChange}
       value={value}
+      {...props}
     />
   )
 }
