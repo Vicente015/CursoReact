@@ -2,12 +2,15 @@ import './App.css'
 import debounce from 'just-debounce-it'
 import { useCallback } from 'react'
 import Input from './components/Input'
+import InterchangeButton from './components/InterchangeButton'
 import LanguageSelector from './components/LanguageSelector'
+import TranslateButton from './components/TranslateButton'
 import { useStore } from './hooks/useStore'
 import useTranslateAPI from './hooks/useTranslateAPI'
 
 function App () {
   const {
+    interchangeLanguages,
     result,
     setResult,
     setSourceLanguage,
@@ -20,12 +23,16 @@ function App () {
   const { getTranslation } = useTranslateAPI({ query: fromText, setResult, source: sourceLanguage, target: toLanguage })
 
   const debouncedGetTranslation = useCallback(
-    debounce(async (query: string) => { await getTranslation({ query }) }, 1_500),
+    debounce(async (query: string) => { await getTranslation({ query }) }, 500),
     [getTranslation])
 
-  const onSourceChange = (text: string) => {
+  const onSourceTextChange = (text: string) => {
     setSourceText(text)
-    debouncedGetTranslation(text)
+    // debouncedGetTranslation(text)
+  }
+
+  const onTranslate = () => {
+    debouncedGetTranslation(fromText)
   }
 
   return (
@@ -38,7 +45,7 @@ function App () {
         className='
           w-fill max-w-[80ch] m-auto p-4
           grid grid-cols-1 gap-4
-          lg:grid-cols-2
+          lg:grid-cols-3
         '
       >
         <section className='source'>
@@ -50,9 +57,13 @@ function App () {
           />
           <Input
             value={fromText}
-            handleChange={onSourceChange}
+            handleChange={onSourceTextChange}
             placeholder='Escriba el texto a traducir'
           />
+        </section>
+        <section className="flex flex-row h-fit w-fit gap-2">
+          <InterchangeButton handleClick={interchangeLanguages}></InterchangeButton>
+          <TranslateButton handleClick={onTranslate}></TranslateButton>
         </section>
         <section className="target">
           <LanguageSelector

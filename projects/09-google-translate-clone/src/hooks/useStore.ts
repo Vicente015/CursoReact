@@ -16,7 +16,9 @@ export const reducer: React.Reducer<State, Action> = (state, action) => {
     if (state.sourceLanguage !== 'auto') {
       return {
         ...state,
+        result: state.sourceText,
         sourceLanguage: state.targetLanguage,
+        sourceText: state.result,
         targetLanguage: state.sourceLanguage
       }
     }
