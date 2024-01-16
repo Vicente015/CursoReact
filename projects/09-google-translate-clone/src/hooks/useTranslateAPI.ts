@@ -22,7 +22,7 @@ export default function useTranslateAPI ({ query, setResult, source, target }: P
     if (query === previousQuery.current) return
 
     try {
-      const response = await fetch(`https://lingva.dialectapp.org/api/v1/${source}/${target}/${query}`)
+      const response = await fetch(`https://lingva.ml/api/v1/${source}/${target}/${query}`)
       const responseResult = await response.json()
       const result = TranslateResult.parse(responseResult)
       if ((result?.translation).length > 0) setResult(result.translation)

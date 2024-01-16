@@ -35,6 +35,14 @@ function App () {
     debouncedGetTranslation(fromText)
   }
 
+  const handleSpeak = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text)
+    // todo: Convert to valid language
+    utterance.lang = toLanguage
+    utterance.rate = 0.9
+    speechSynthesis.speak(utterance)
+  }
+
   return (
     <>
       <header className='py-4 m-auto shadow-lg text-center bg-bg-primary text-text-primary flex-col gap-1'>
@@ -44,11 +52,11 @@ function App () {
       <main
         className='
           w-fill max-w-[80ch] m-auto p-4
-          grid grid-cols-1 gap-4
-          lg:grid-cols-3
+          flex flex-col gap-4
+          md:flex-nowrap md:flex-row
         '
       >
-        <section className='source'>
+        <section className='source w-full'>
           <LanguageSelector
             type='source'
             value={sourceLanguage}
@@ -59,13 +67,14 @@ function App () {
             value={fromText}
             handleChange={onSourceTextChange}
             placeholder='Escriba el texto a traducir'
+            handleSpeak={() => { handleSpeak(fromText) }}
           />
         </section>
-        <section className="flex flex-row h-fit w-fit gap-2">
+        <section className="flex flex-row items-start justify-center m-0 gap-2">
           <InterchangeButton handleClick={interchangeLanguages}></InterchangeButton>
           <TranslateButton handleClick={onTranslate}></TranslateButton>
         </section>
-        <section className="target">
+        <section className="target w-full">
           <LanguageSelector
             type='target'
             value={toLanguage}
@@ -76,6 +85,7 @@ function App () {
             disabled={true}
             value={result}
             placeholder=''
+            handleSpeak={() => { handleSpeak(result) }}
           />
         </section>
       </main>

@@ -7,7 +7,7 @@ interface Props {
 const TranslateButton: React.FC<Props> = ({ handleClick }) => {
   return (
     <button type="button" onClick={handleClick}>
-      <ZapIcon className='text-gray-500'></ZapIcon>
+      <ZapIcon className='w-8 h-8 text-neutral-400 border-neutral-500 border-2 border-solid rounded-md hover:text-neutral-300'></ZapIcon>
     </button>
   )
 }
