@@ -11,6 +11,7 @@ import useTranslateAPI from './hooks/useTranslateAPI'
 function App () {
   const {
     interchangeLanguages,
+    loading,
     result,
     setResult,
     setSourceLanguage,
@@ -20,11 +21,19 @@ function App () {
     sourceText: fromText,
     targetLanguage: toLanguage
   } = useStore()
-  const { getTranslation } = useTranslateAPI({ query: fromText, setResult, source: sourceLanguage, target: toLanguage })
+  const { getTranslation } = useTranslateAPI({ query: fromText })
 
   const debouncedGetTranslation = useCallback(
-    debounce(async (query: string) => { await getTranslation({ query }) }, 500),
-    [getTranslation])
+    debounce(async (query: string) => {
+      await getTranslation({
+        query,
+        setResult,
+        source: sourceLanguage,
+        target: toLanguage
+      })
+    }, 500),
+    [getTranslation]
+  )
 
   const onSourceTextChange = (text: string) => {
     setSourceText(text)
@@ -37,9 +46,8 @@ function App () {
 
   const handleSpeak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text)
-    // todo: Convert to valid language
     utterance.lang = toLanguage
-    utterance.rate = 0.9
+    speechSynthesis.cancel()
     speechSynthesis.speak(utterance)
   }
 
@@ -83,6 +91,7 @@ function App () {
           />
           <Input
             disabled={true}
+            loading={loading}
             value={result}
             placeholder=''
             handleSpeak={() => { handleSpeak(result) }}

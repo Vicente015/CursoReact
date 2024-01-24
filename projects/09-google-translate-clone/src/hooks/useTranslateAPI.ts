@@ -15,10 +15,10 @@ const TranslateResult = z.object({
   translation: z.string()
 })
 
-export default function useTranslateAPI ({ query, setResult, source, target }: Props) {
+export default function useTranslateAPI ({ query }: Pick<Props, 'query'>) {
   const previousQuery = useRef(query)
 
-  const getTranslation = useCallback(async ({ query }: { query: string }) => {
+  const getTranslation = async ({ query, setResult, source, target }: Props) => {
     if (query === previousQuery.current) return
 
     try {
@@ -29,7 +29,7 @@ export default function useTranslateAPI ({ query, setResult, source, target }: P
     } catch (error) {
       console.error(error)
     }
-  }, [query])
+  }
 
   return {
     getTranslation
