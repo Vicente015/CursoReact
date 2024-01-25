@@ -18,8 +18,6 @@ const Input: React.FC<Props & HTMLProps<HTMLTextAreaElement>> = ({ disabled, han
     if (handleChange !== undefined) handleChange(event.target.value)
   }
 
-  console.debug(loading)
-
   const handleClipboard = () => {
     navigator.clipboard.writeText(value).catch(() => { })
   }
@@ -27,14 +25,14 @@ const Input: React.FC<Props & HTMLProps<HTMLTextAreaElement>> = ({ disabled, han
   return (
     <div
       className='
-      p-2 my-2 flex flex-col content-between min-h-12 h-full
+      p-2 my-2 flex flex-col content-between justify-between min-h-[182px] h-full
       bg-bg-secondary text-text-secondary rounded-md shadow-sm
       focus-within:outline focus-within:outline-2 focus-within:outline-accent-secondary
     '
     >
       {
         loading === true
-          ? <div className='flex flex-col items-center content-center justify-center w-full h-full'>
+          ? <div className='flex flex-col m-auto items-center content-center justify-center w-full h-full'>
             <BeatLoader
               color='gray'
               loading={loading}
@@ -53,10 +51,10 @@ const Input: React.FC<Props & HTMLProps<HTMLTextAreaElement>> = ({ disabled, han
         />
       }
       <div className='flex gap-2 justify-end'>
-        <button onClick={handleClipboard}>
+        <button aria-label='Copy text' onClick={handleClipboard}>
           <CopyIcon className='text-neutral-400 hover:text-neutral-300'></CopyIcon>
         </button>
-        <button onClick={handleSpeak}>
+        <button aria-label='Listen to the text' onClick={handleSpeak}>
           <Volume2Icon className='text-neutral-400 hover:text-neutral-300'></Volume2Icon>
         </button>
       </div>

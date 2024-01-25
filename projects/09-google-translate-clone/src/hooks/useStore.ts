@@ -2,7 +2,7 @@ import { useReducer } from 'react'
 import { type Action, type Language, type SourceLanguage, type State } from '../types'
 
 const initialState: State = {
-  loading: true,
+  loading: false,
   result: '',
   sourceLanguage: 'auto',
   sourceText: '',
