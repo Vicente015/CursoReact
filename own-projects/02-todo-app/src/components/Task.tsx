@@ -12,8 +12,6 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const [text, setText] = useState(title)
   const [showTooltip, setShowTooltip] = useState(false)
 
-  // https://es.react.dev/reference/react/useRef
-
   const inputRef = useRef<HTMLInputElement>(null)
 
   const cancelEditing = () => {
@@ -65,7 +63,6 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const enableEditing = () => {
     setText(title)
     setEditing(true)
-
     inputRef.current?.focus()
   }
 
@@ -75,8 +72,8 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
     setShowTooltip(!showTooltip)
   }
 
-  const [referenceElement, setReferenceElement] = useState()
-  const [popperElement, setPopperElement] = useState()
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | SVGSVGElement | null>(null)
+  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null)
   const { attributes, styles } = usePopper(referenceElement, popperElement, {
     placement: 'top'
   })
