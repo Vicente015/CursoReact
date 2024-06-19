@@ -1,5 +1,5 @@
 import { EditIcon, MenuIcon, TrashIcon, XCircleIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { usePopper } from 'react-popper'
 import { useTasksDispatch } from '../context/TasksContext'
 import { type ColorsUnion, type TaskType } from '../types/Task'
@@ -10,9 +10,12 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const dispatch = useTasksDispatch()
   const [isEditing, setEditing] = useState(false)
   const [text, setText] = useState(title)
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const cancelEditing = () => {
-    setText('')
+    setText(title)
     setEditing(false)
   }
 
@@ -47,6 +50,8 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
     })
   }
 
+  // https://code.whatever.social/questions/54383386/react-typescript-correct-type-for-event-handler-prop
+
   const onColorChange: React.MouseEventHandler<HTMLLIElement> = (event) => {
     const newColor = event.target as HTMLElement
     dispatch({
@@ -58,56 +63,76 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
   const enableEditing = () => {
     setText(title)
     setEditing(true)
+    inputRef.current?.focus()
   }
 
   // todo: Confirmación al borrar
 
-  type usePopperParameters = Parameters<typeof usePopper>
+  const tooltipShow = () => {
+    setShowTooltip(!showTooltip)
+  }
 
-  const [referenceElement, setReferenceElement] = useState<usePopperParameters[0]>()
-  const [popperElement, setPopperElement] = useState<usePopperParameters[1]>()
-  const [showTooltip, setShowTooltip] = useState(false)
-  const { attributes, styles, update: popperUpdate } = usePopper(referenceElement, popperElement, {
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | SVGSVGElement | null>(null)
+  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null)
+  const { attributes, styles } = usePopper(referenceElement, popperElement, {
     placement: 'top'
   })
 
-  const tooltipShow = () => {
-    setShowTooltip(!showTooltip)
-    if (popperUpdate !== null) void popperUpdate()
-  }
-
   return (
-  <>
-    <li className={`task ${completed ? 'disabled-task' : ''}`} id={id.toString()} style={{ backgroundColor: `var(--gnome-${color}2)` }}>
-      {isEditing
-        ? (
+    <>
+      <li
+        className={`task ${completed ? 'disabled-task' : ''}`}
+        id={id.toString()}
+        style={{ backgroundColor: `var(--gnome-${color}2)` }}
+        onDoubleClick={enableEditing}
+      >
+        {isEditing
+          ? (
           <>
-            <input type="text" className='title-edit' name="title-edit" id="title-edit" value={text} onChange={handleEdit} onKeyDown={handleKeyDown} />
+            <input
+              ref={inputRef}
+              type="text"
+              className="title-edit"
+              name="title-edit"
+              id="title-edit"
+              value={text}
+              onChange={handleEdit}
+              onKeyDown={handleKeyDown}
+            />
             <div className="icons">
-              <XCircleIcon className='fa-solid fa-xmark' onClick={cancelEditing}/>
+              <XCircleIcon className="fa-solid fa-xmark" onClick={cancelEditing} />
             </div>
           </>
-          )
-        : (
+            )
+          : (
           <>
-            <input className='checkbox' type="checkbox" name="check" id="check" value={`${completed}`} checked={completed} onChange={handleCheck}/>
+            <input
+              className="checkbox"
+              type="checkbox"
+              name="check"
+              id="check"
+              value={`${completed}`}
+              checked={completed}
+              onChange={handleCheck}
+            />
             <h4>{title}</h4>
-              <div className="icons">
-                <EditIcon className="fa-solid fa-pen-to-square" onClick={enableEditing} />
-                <TrashIcon className="fa-solid fa-trash" onClick={handleDestroy} />
-                <MenuIcon className='fa-solid fa-bars' ref={setReferenceElement} onClick={tooltipShow}/>
+            <div className="icons">
+              <EditIcon className="fa-solid fa-pen-to-square" onClick={enableEditing} />
+              <TrashIcon className="fa-solid fa-trash" onClick={handleDestroy} />
+              <MenuIcon className="fa-solid fa-bars" ref={setReferenceElement} onClick={tooltipShow} />
             </div>
           </>
-          ) }
-    </li>
+            )}
+      </li>
 
-    <Portal>
-      <div className={`tooltip ${showTooltip ? 'show' : 'hidden'}`} ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+      <Portal>
+        <div className={`tooltip ${showTooltip ? 'show' : 'hidden'}`} ref={setPopperElement} style={styles.popper} {...attributes.popper}>
           <div data-popper-arrow></div>
           <ul style={{ display: 'grid', gap: '.2em', gridTemplateColumns: 'repeat(4, 1fr)' }}>
             {colors.map((color) => {
               return (
-                <li key={color}
+                <li
+                  key={color}
                   id={color}
                   onClick={onColorChange}
                   style={{
@@ -119,12 +144,11 @@ const Task: React.FC<TaskType> = ({ color, completed, id, title }) => {
                   }}
                 />
               )
-            })
-            }
+            })}
           </ul>
-      </div>
-    </Portal>
-  </>
+        </div>
+      </Portal>
+    </>
   )
 }
 
